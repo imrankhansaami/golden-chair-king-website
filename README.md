@@ -22,16 +22,21 @@ Colors are sampled from the client logo and defined in `src/input.css`
 
 ```
 index.html              Homepage
-shop.html               All chairs + filters (category, price, sort, search)
-product/<slug>.html     Product detail pages (generated)
+shop.html               All chairs + live filters (category, price, sort, search)
+product/<slug>.html     11 product detail pages (gallery, specs, related chairs)
+cart.html               Cart page with quantity editor
+checkout.html           Checkout — Cash on Delivery / bKash / Nagad advance (TrxID), order opens in WhatsApp
+offers.html             Dedicated offers page with live countdown
 about.html / contact.html / faq.html
-cart.html / checkout.html / order-tracking.html
-privacy-policy.html / terms.html / refund-exchange.html
+delivery.html           Delivery & shipping info (rates are indicative — confirm with client)
+order-tracking.html     Tracking page (live status via WhatsApp)
+privacy-policy.html / terms.html / refund-exchange.html   (templates — review before launch)
+404.html
 src/input.css           Theme + custom styles  ->  build to assets/css/site.css
-assets/js/site.js       Cart, EN/BN toggle, drawers, countdown, toasts
+assets/js/site.js       Cart, EN/BN toggle, drawers, counts, filters, checkout, gallery
 assets/js/products.js   Generated catalog copy for the browser
-scripts/data/products.mjs   Catalog data — THE single source of truth
-scripts/build-pages.mjs     Static page generator (reads the data, writes html)
+scripts/data/products.mjs   Catalog data — THE single source of truth (products, prices, specs, FAQs use it)
+scripts/build-pages.mjs     Static page generator (writes ALL pages + sitemap.xml)
 assets/img/             Logo, hero, product photos (webp), scenes, banners
 ```
 
@@ -39,7 +44,7 @@ assets/img/             Logo, hero, product photos (webp), scenes, banners
 
 ```bash
 npm install              # once
-npm run build            # regenerate pages + CSS
+npm run build            # regenerate all pages + sitemap + CSS
 npm run build:css        # CSS only
 npm run watch:css        # CSS watch while editing
 npm run serve            # preview at http://localhost:5173
@@ -47,16 +52,16 @@ npm run serve            # preview at http://localhost:5173
 
 ## Editing content
 
-- **Products / prices / names**: edit `scripts/data/products.mjs`, then run `npm run build`.
-  This regenerates `index.html` (and later all pages) — do not edit the HTML by hand.
-- **Real photos**: the client photos are already processed into
-  `assets/img/products/<slug>-<n>.webp` (galleries) — just add more files with the
-  same pattern and list them in the product's `photos` array. The one-off import
-  tool is `scripts/prepare-client-photos.mjs` (expects the raw files in Downloads).
-- **Phone / WhatsApp**: `SITE` object at the top of `scripts/data/products.mjs`
+- **Products / prices / specs**: edit `scripts/data/products.mjs`, then `npm run build`.
+  Every page (shop, products, offers, homepage, sitemap) regenerates from this file.
+  Never edit the generated HTML by hand — it gets overwritten.
+- **Real photos**: client photos are processed into `assets/img/products/<slug>-<n>.webp`.
+  Add more gallery photos by dropping files with the same pattern and listing them in `photos`.
+  The one-off importer is `scripts/prepare-client-photos.mjs` (expects raw files in Downloads).
+- **Phone / WhatsApp / address / email**: the `SITE` object in `scripts/data/products.mjs`
   plus `WA_NUMBER` in `assets/js/site.js`.
-- **Texts**: English is the default HTML content; Bengali lives in `data-bn` attributes
-  (the visible text is the English source for SEO).
+- **Texts**: English is the default HTML content; Bengali lives in `data-bn` attributes.
+- **Cache**: stylesheet/script URLs carry a build stamp (`?v=…`) so edits appear without hard refresh.
 
 
 ## SEO
@@ -76,8 +81,8 @@ npm run serve            # preview at http://localhost:5173
 
 ## Pending / next steps
 
-- [ ] Client review of updated homepage → build remaining pages (shop, product detail ×11,
-      about, contact, cart, checkout, FAQ, policies) — `scripts/build-pages.mjs`
-- [ ] Confirm real prices (demo prices are placeholders: ৳4,900 – ৳16,500)
-- [ ] Wire real online payments (SSLCommerz / bKash merchant API) in checkout
+- [ ] Confirm real prices, delivery rates & policy texts with the client
+      (demo prices ৳4,900 – ৳16,500; delivery rates are marked "indicative")
+- [ ] Review the policy pages (privacy / terms / refund) before launch
+- [ ] Card payments (SSLCommerz) — plug into `checkout.html` when the merchant account is ready
 - [ ] Point domain + submit sitemap to Google Search Console

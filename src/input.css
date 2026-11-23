@@ -152,6 +152,13 @@
     scrollbar-width: none;
   }
 
+  .shop-chip {
+    @apply shrink-0 rounded-full border border-base-300 bg-white px-4 py-2 text-xs font-bold text-navy-800 transition-colors hover:border-gold-400;
+  }
+  .shop-chip.active {
+    @apply border-gold-400 bg-navy-950 text-gold-300;
+  }
+
   summary::-webkit-details-marker {
     display: none;
   }

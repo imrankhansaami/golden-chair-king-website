@@ -63,12 +63,13 @@
     return readCart().reduce(function (n, i) { return n + (i.qty || 1) * (i.price || 0); }, 0);
   }
 
-  function addToCart(item) {
+  function addToCart(item, qty) {
+    var q = Math.max(1, parseInt(qty || 1, 10) || 1);
     var cart = readCart();
     var found = null;
     for (var k = 0; k < cart.length; k++) { if (cart[k].id === item.id) { found = cart[k]; break; } }
-    if (found) { found.qty = (found.qty || 1) + 1; }
-    else { item.qty = 1; cart.push(item); }
+    if (found) { found.qty = (found.qty || 1) + q; }
+    else { item.qty = q; cart.push(item); }
     writeCart(cart);
     var lang = currentLang();
     var name = lang === "bn" ? (item.nameBn || item.name) : item.name;
@@ -127,6 +128,85 @@
         "</div>" +
       "</div>";
     }).join("");
+    renderCartPage(cart, lang);
+  }
+
+  /* cart page + checkout summary (filled when those elements exist) */
+  function renderCartPage(cart, lang) {
+    var pageItems = document.getElementById("cart-page-items");
+    if (pageItems) {
+      if (!cart.length) {
+        pageItems.innerHTML =
+          '<div class="flex flex-col items-center gap-3 rounded-3xl border border-base-300 bg-base-100 py-16 text-center">' +
+            '<span class="flex size-16 items-center justify-center rounded-full bg-base-200 text-base-content/40"><svg class="size-7"><use href="#i-cart"/></svg></span>' +
+            '<p class="font-bold text-navy-900">' + (lang === "bn" ? "\u0995\u09be\u09b0\u09cd\u099f \u098f\u0996\u09a8 \u0996\u09be\u09b2\u09bf" : "Your cart is empty") + "</p>" +
+            '<a class="btn btn-gold btn-sm font-bold" href="shop.html">' + (lang === "bn" ? "\u098f\u0996\u09a8\u0987 \u0995\u09bf\u09a8\u09c1\u09a8" : "Shop Now") + "</a>" +
+          "</div>";
+      } else {
+        pageItems.innerHTML = cart.map(function (i) {
+          var name = lang === "bn" ? (i.nameBn || i.name) : i.name;
+          return '<div class="flex gap-4 rounded-2xl border border-base-300 bg-base-100 p-4">' +
+            '<img src="' + i.img + '" alt="' + name + '" width="88" height="88" loading="lazy" class="size-20 shrink-0 rounded-xl bg-base-200 object-cover sm:size-22">' +
+            '<div class="min-w-0 flex-1">' +
+              '<div class="flex items-start justify-between gap-3">' +
+                '<p class="text-sm font-bold text-navy-900 sm:text-base">' + name + "</p>" +
+                '<button type="button" class="btn btn-ghost btn-xs btn-circle text-base-content/40 hover:text-error" data-remove="' + i.id + '" aria-label="Remove"><svg class="size-4"><use href="#i-trash"/></svg></button>' +
+              "</div>" +
+              '<div class="mt-3 flex flex-wrap items-center justify-between gap-3">' +
+                '<div class="join rounded-lg border border-base-300 bg-base-100">' +
+                  '<button type="button" class="join-item btn btn-sm px-2.5" data-dec="' + i.id + '" aria-label="Decrease"><svg class="size-3.5"><use href="#i-minus"/></svg></button>' +
+                  '<span class="join-item flex min-w-9 items-center justify-center text-sm font-bold">' + i.qty + "</span>" +
+                  '<button type="button" class="join-item btn btn-sm px-2.5" data-inc="' + i.id + '" aria-label="Increase"><svg class="size-3.5"><use href="#i-plus"/></svg></button>' +
+                "</div>" +
+                '<span class="font-display text-base font-bold text-navy-900">' + money(i.price * i.qty) + "</span>" +
+              "</div>" +
+            "</div>" +
+          "</div>";
+        }).join("");
+      }
+      var ps = document.getElementById("cart-page-subtotal");
+      if (ps) ps.textContent = money(cartSubtotal());
+      var pt = document.getElementById("cart-page-total");
+      if (pt) pt.textContent = money(cartSubtotal());
+      var cb = document.getElementById("cart-checkout-btn");
+      if (cb) {
+        if (!cart.length) cb.classList.add("pointer-events-none", "opacity-50");
+        else cb.classList.remove("pointer-events-none", "opacity-50");
+      }
+    }
+    var coItems = document.getElementById("co-items");
+    if (coItems) {
+      if (!cart.length) {
+        coItems.innerHTML = '<p class="text-sm text-base-content/60">Your cart is empty \u2014 <a class="font-bold text-gold-700 underline underline-offset-2" href="shop.html">add a chair</a> first.</p>';
+      } else {
+        coItems.innerHTML = cart.map(function (i) {
+          return '<div class="flex items-center gap-3">' +
+            '<img src="' + i.img + '" alt="' + i.name + '" width="44" height="44" loading="lazy" class="size-11 shrink-0 rounded-lg bg-base-200 object-cover">' +
+            '<div class="min-w-0 flex-1"><p class="truncate text-[13px] font-bold text-navy-900">' + i.name + '</p><p class="text-[11px] font-semibold text-base-content/50">' + i.qty + " \u00D7 " + money(i.price) + "</p></div>" +
+            '<span class="text-sm font-extrabold text-navy-900">' + money(i.price * i.qty) + "</span>" +
+          "</div>";
+        }).join("");
+      }
+      var cs = document.getElementById("co-subtotal");
+      if (cs) cs.textContent = money(cartSubtotal());
+    }
+  }
+
+  /* read product data off an [data-add] / [data-buy-now] element */
+  function itemFromEl(el) {
+    return {
+      id: el.getAttribute("data-id"),
+      name: el.getAttribute("data-name"),
+      nameBn: el.getAttribute("data-name-bn"),
+      price: parseFloat(el.getAttribute("data-price") || "0"),
+      img: el.getAttribute("data-img")
+    };
+  }
+  function qtyFromEl(el) {
+    var sel = el.getAttribute("data-qty-from");
+    if (!sel) return 1;
+    var inp = document.querySelector(sel);
+    return inp ? Math.max(1, parseInt(inp.value || "1", 10) || 1) : 1;
   }
 
   /* ================= WhatsApp order helper ================= */
@@ -316,6 +396,248 @@
     }
   }
 
+  /* ================= Product gallery ================= */
+  function initGallery() {
+    var main = document.getElementById("gallery-main");
+    if (!main) return;
+    $$("[data-gallery-thumb]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var src = btn.getAttribute("data-src");
+        if (!src) return;
+        main.src = src;
+        $$("[data-gallery-thumb]").forEach(function (b) {
+          b.classList.remove("border-gold-400", "ring-2", "ring-gold-400/40");
+          b.classList.add("border-base-300");
+        });
+        btn.classList.remove("border-base-300");
+        btn.classList.add("border-gold-400", "ring-2", "ring-gold-400/40");
+      });
+    });
+  }
+
+  /* ================= Shop filters ================= */
+  function initShop() {
+    var grid = document.getElementById("shop-grid");
+    if (!grid) return;
+    var cards = Array.prototype.slice.call(grid.querySelectorAll("[data-slug]"));
+    var state = { cat: "", q: "", min: null, max: null, deal: false, sort: "featured" };
+    var params = new URLSearchParams(window.location.search);
+    if (params.get("cat")) state.cat = params.get("cat");
+    if (params.get("q")) state.q = params.get("q");
+    if (params.get("deal") === "1") state.deal = true;
+
+    var searchEl = document.getElementById("shop-search");
+    var minEl = document.getElementById("shop-min");
+    var maxEl = document.getElementById("shop-max");
+    var sortEl = document.getElementById("shop-sort");
+    if (searchEl && state.q) searchEl.value = state.q;
+
+    function chipSync() {
+      $$("[data-cat-filter]").forEach(function (b) {
+        b.classList.toggle("active", (b.getAttribute("data-cat-filter") || "") === state.cat);
+      });
+      $$("[data-deal-filter]").forEach(function (b) { b.classList.toggle("active", state.deal); });
+    }
+    function apply() {
+      var shown = 0;
+      cards.forEach(function (c) {
+        var price = parseFloat(c.getAttribute("data-price") || "0");
+        var ok = true;
+        if (state.cat && c.getAttribute("data-cat") !== state.cat) ok = false;
+        if (ok && state.q && (c.getAttribute("data-search") || "").indexOf(state.q.toLowerCase()) === -1) ok = false;
+        if (ok && state.min !== null && price < state.min) ok = false;
+        if (ok && state.max !== null && price > state.max) ok = false;
+        if (ok && state.deal && c.getAttribute("data-deal") !== "1") ok = false;
+        c.classList.toggle("hidden", !ok);
+        if (ok) shown++;
+      });
+      var sorted = cards.slice();
+      if (state.sort !== "featured") {
+        sorted.sort(function (a, b) {
+          var pa = parseFloat(a.getAttribute("data-price") || "0");
+          var pb = parseFloat(b.getAttribute("data-price") || "0");
+          if (state.sort === "price-asc") return pa - pb;
+          if (state.sort === "price-desc") return pb - pa;
+          if (state.sort === "rating") return parseFloat(b.getAttribute("data-rating") || "0") - parseFloat(a.getAttribute("data-rating") || "0");
+          var da = 1 - pa / (parseFloat(a.getAttribute("data-old") || "") || pa || 1);
+          var db = 1 - pb / (parseFloat(b.getAttribute("data-old") || "") || pb || 1);
+          return db - da;
+        });
+      }
+      sorted.forEach(function (c) { grid.appendChild(c); });
+      var count = document.getElementById("shop-count");
+      if (count) count.textContent = "Showing " + shown + " of " + cards.length + " chairs";
+      var empty = document.getElementById("shop-empty");
+      if (empty) empty.classList.toggle("hidden", shown !== 0);
+      var p = new URLSearchParams();
+      if (state.cat) p.set("cat", state.cat);
+      if (state.q) p.set("q", state.q);
+      if (state.deal) p.set("deal", "1");
+      var qs = p.toString();
+      window.history.replaceState(null, "", qs ? "?" + qs : window.location.pathname);
+    }
+    $$("[data-cat-filter]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        state.cat = b.getAttribute("data-cat-filter") || "";
+        chipSync();
+        apply();
+      });
+    });
+    $$("[data-deal-filter]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        state.deal = !state.deal;
+        chipSync();
+        apply();
+      });
+    });
+    if (searchEl) searchEl.addEventListener("input", function () { state.q = searchEl.value.trim(); apply(); });
+    if (minEl) minEl.addEventListener("input", function () { state.min = minEl.value === "" ? null : parseFloat(minEl.value); apply(); });
+    if (maxEl) maxEl.addEventListener("input", function () { state.max = maxEl.value === "" ? null : parseFloat(maxEl.value); apply(); });
+    if (sortEl) sortEl.addEventListener("change", function () { state.sort = sortEl.value; apply(); });
+    function clearAll() {
+      state = { cat: "", q: "", min: null, max: null, deal: false, sort: "featured" };
+      if (searchEl) searchEl.value = "";
+      if (minEl) minEl.value = "";
+      if (maxEl) maxEl.value = "";
+      if (sortEl) sortEl.value = "featured";
+      chipSync();
+      apply();
+    }
+    var clearBtn = document.getElementById("shop-clear");
+    if (clearBtn) clearBtn.addEventListener("click", clearAll);
+    var emptyClear = document.getElementById("shop-empty-clear");
+    if (emptyClear) emptyClear.addEventListener("click", clearAll);
+    chipSync();
+    apply();
+  }
+
+  /* ================= Checkout ================= */
+  function initCheckout() {
+    var form = document.getElementById("checkout-form");
+    if (!form) return;
+    function selectedPay() {
+      var el = form.querySelector("input[name='payment']:checked");
+      return el ? el.value : "cod";
+    }
+    function syncPanels() {
+      var pay = selectedPay();
+      $$("[data-pay-panel]").forEach(function (p) {
+        p.classList.toggle("hidden", p.getAttribute("data-pay-panel") !== pay);
+      });
+    }
+    $$("input[name='payment']").forEach(function (r) { r.addEventListener("change", syncPanels); });
+    syncPanels();
+
+    function toggleErr(id, bad) {
+      var el = document.getElementById(id);
+      if (el) el.classList.toggle("hidden", !bad);
+      return !bad;
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var name = (document.getElementById("co-name").value || "").trim();
+      var phone = (document.getElementById("co-phone").value || "").trim();
+      var address = (document.getElementById("co-address").value || "").trim();
+      var district = document.getElementById("co-district").value;
+      var pay = selectedPay();
+      var trx = "";
+      if (pay === "bkash" || pay === "nagad") {
+        var tEl = document.getElementById("co-trx-" + pay);
+        trx = tEl ? tEl.value.trim() : "";
+      }
+      var ok = true;
+      ok = toggleErr("err-name", !name) && ok;
+      ok = toggleErr("err-phone", !/^(\+?880|0)1[3-9]\d{8}$/.test(phone.replace(/[\s-]/g, ""))) && ok;
+      ok = toggleErr("err-address", !address) && ok;
+      ok = toggleErr("err-district", !district) && ok;
+      if (pay === "bkash" || pay === "nagad") ok = toggleErr("err-trx-" + pay, !trx) && ok;
+      var cart = readCart();
+      if (!cart.length) {
+        toast(currentLang() === "bn" ? "\u0995\u09be\u09b0\u09cd\u099f \u0996\u09be\u09b2\u09bf \u2014 \u0986\u0997\u09c7 \u099a\u09c7\u09df\u09be\u09b0 \u09af\u09cb\u0997 \u0995\u09b0\u09c1\u09a8" : "Your cart is empty \u2014 add a chair first");
+        ok = false;
+      }
+      if (!ok) return;
+
+      var lines = [];
+      lines.push("\uD83D\uDED2 New order \u2014 Golden Chair King");
+      lines.push("");
+      lines.push("Name: " + name);
+      lines.push("Phone: " + phone);
+      var email = (document.getElementById("co-email").value || "").trim();
+      if (email) lines.push("Email: " + email);
+      var area = (document.getElementById("co-area").value || "").trim();
+      lines.push("Address: " + address + ", " + (area ? area + ", " : "") + district);
+      lines.push("");
+      lines.push("Items:");
+      cart.forEach(function (i, n) {
+        lines.push((n + 1) + ". " + i.name + " \u00D7 " + i.qty + " \u2014 \u09F3" + (i.price * i.qty).toLocaleString("en-IN"));
+      });
+      lines.push("");
+      lines.push("Subtotal: \u09F3" + cartSubtotal().toLocaleString("en-IN"));
+      var payLabel = pay === "cod" ? "Cash on Delivery" : pay === "bkash" ? "bKash (advance)" : "Nagad (advance)";
+      lines.push("Payment: " + payLabel + (trx ? " \u2014 TrxID: " + trx : ""));
+      var note = (document.getElementById("co-note").value || "").trim();
+      if (note) lines.push("Note: " + note);
+      var url = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(lines.join("\n"));
+      window.open(url, "_blank", "noopener");
+
+      form.classList.add("hidden");
+      var succ = document.getElementById("checkout-success");
+      if (succ) {
+        succ.classList.remove("hidden");
+        var recap = document.getElementById("co-success-summary");
+        if (recap) recap.textContent = lines.join("\n");
+        var again = document.getElementById("co-wa-again");
+        if (again) again.href = url;
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  /* ================= Order tracking (demo flow) ================= */
+  function initTracking() {
+    var form = document.getElementById("track-form");
+    if (!form) return;
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var v = (document.getElementById("track-input").value || "").trim();
+      if (!v) return;
+      var res = document.getElementById("track-result");
+      if (res) res.classList.remove("hidden");
+      var link = document.getElementById("track-wa");
+      if (link) {
+        link.href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent("Assalamu Alaikum! Please check my order status. Phone / reference: " + v);
+      }
+      if (res && res.scrollIntoView) res.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
+
+  /* ================= Contact form (opens WhatsApp) ================= */
+  function initContactForm() {
+    var form = document.getElementById("contact-form");
+    if (!form) return;
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var name = (document.getElementById("ct-name").value || "").trim();
+      var phone = (document.getElementById("ct-phone").value || "").trim();
+      var msg = (document.getElementById("ct-msg").value || "").trim();
+      var ok = true;
+      function toggleErr(id, bad) {
+        var el = document.getElementById(id);
+        if (el) el.classList.toggle("hidden", !bad);
+        return !bad;
+      }
+      ok = toggleErr("err-ct-name", !name) && ok;
+      ok = toggleErr("err-ct-msg", !msg) && ok;
+      if (!ok) return;
+      var text = "Assalamu Alaikum! I'm " + name + (phone ? " (" + phone + ")" : "") + ".\n\n" + msg;
+      window.open("https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(text), "_blank", "noopener");
+      toast(currentLang() === "bn" ? "\u09b9\u09cb\u09df\u09be\u099f\u09b8\u0985\u09cd\u09af\u09be\u09aa \u0996\u09cb\u09b2\u09be \u09b9\u09df\u09c7\u099b\u09c7 \u2014 Send \u099a\u09be\u09aa\u09c1\u09a8" : "WhatsApp opened \u2014 press Send to reach us");
+      form.reset();
+    });
+  }
+
   /* ================= Delegated events ================= */
   document.addEventListener("click", function (e) {
     var t = e.target;
@@ -324,13 +646,28 @@
     var add = t.closest("[data-add]");
     if (add) {
       e.preventDefault();
-      addToCart({
-        id: add.getAttribute("data-id"),
-        name: add.getAttribute("data-name"),
-        nameBn: add.getAttribute("data-name-bn"),
-        price: parseFloat(add.getAttribute("data-price") || "0"),
-        img: add.getAttribute("data-img")
-      });
+      addToCart(itemFromEl(add), qtyFromEl(add));
+      return;
+    }
+
+    var buy = t.closest("[data-buy-now]");
+    if (buy) {
+      e.preventDefault();
+      addToCart(itemFromEl(buy), qtyFromEl(buy));
+      window.location.href = "checkout.html";
+      return;
+    }
+
+    var qinc = t.closest("[data-qty-inc]");
+    if (qinc) {
+      var qin = document.getElementById(qinc.getAttribute("data-qty-inc"));
+      if (qin) qin.value = Math.min(20, (parseInt(qin.value || "1", 10) || 1) + 1);
+      return;
+    }
+    var qdec = t.closest("[data-qty-dec]");
+    if (qdec) {
+      var qin2 = document.getElementById(qdec.getAttribute("data-qty-dec"));
+      if (qin2) qin2.value = Math.max(1, (parseInt(qin2.value || "1", 10) || 1) - 1);
       return;
     }
 
@@ -381,6 +718,11 @@
     initCounters();
     initReveal();
     initScrollUI();
+    initGallery();
+    initShop();
+    initCheckout();
+    initTracking();
+    initContactForm();
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
