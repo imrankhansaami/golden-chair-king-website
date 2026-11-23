@@ -644,16 +644,27 @@
     if (!slider) return;
     var track = document.getElementById("hero-track");
     if (!track) return;
-    var slides = Array.prototype.slice.call(track.children);
-    if (slides.length < 2) return;
-    var dots = Array.prototype.slice.call(slider.querySelectorAll("[data-hero-dot]"));
-    var prev = slider.querySelector("[data-hero-prev]");
-    var next = slider.querySelector("[data-hero-next]");
+    var allSlides = Array.prototype.slice.call(track.children);
+    var allDots = Array.prototype.slice.call(slider.querySelectorAll("[data-hero-dot]"));
+    if (allSlides.length < 2) return;
     var idx = 0;
     var timer = null;
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var slides = [];
+    var dots = [];
 
+    function isVisible(el) {
+      return el.offsetParent !== null && window.getComputedStyle(el).display !== "none";
+    }
+    function sync() {
+      slides = allSlides.filter(isVisible);
+      dots = allDots.filter(isVisible);
+      if (!slides.length) return;
+      if (idx >= slides.length) idx = 0;
+      go(idx);
+    }
     function go(i) {
+      if (!slides.length) return;
       idx = (i % slides.length + slides.length) % slides.length;
       track.style.transform = "translateX(-" + idx * 100 + "%)";
       dots.forEach(function (d, k) { d.classList.toggle("active", k === idx); });
@@ -668,9 +679,13 @@
     }
     function manual(i) { go(i); stop(); start(); }
 
+    var prev = slider.querySelector("[data-hero-prev]");
+    var next = slider.querySelector("[data-hero-next]");
     if (prev) prev.addEventListener("click", function () { manual(idx - 1); });
     if (next) next.addEventListener("click", function () { manual(idx + 1); });
-    dots.forEach(function (d, k) { d.addEventListener("click", function () { manual(k); }); });
+    allDots.forEach(function (d) {
+      d.addEventListener("click", function () { manual(dots.indexOf(d)); });
+    });
     slider.addEventListener("mouseenter", stop);
     slider.addEventListener("mouseleave", start);
 
@@ -688,7 +703,14 @@
       if (e.key === "ArrowRight") manual(idx + 1);
     });
 
-    go(0);
+    // re-derive visible slides when the breakpoint changes (some slides are hidden on phones)
+    window.addEventListener("resize", function () {
+      stop();
+      sync();
+      start();
+    });
+
+    sync();
     start();
   }
 
