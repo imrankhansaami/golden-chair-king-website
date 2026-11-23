@@ -106,10 +106,10 @@
   }
 
   .nav-link {
-    @apply rounded-lg px-3 py-2 text-sm font-semibold text-white/80 transition-colors hover:bg-white/5 hover:text-gold-400;
+    @apply rounded-lg px-3 py-2 text-sm font-semibold text-navy-800/80 transition-colors hover:bg-navy-950/5 hover:text-gold-600;
   }
   .nav-link.active {
-    @apply text-gold-400;
+    @apply text-gold-600;
   }
 
   .menu-link {
