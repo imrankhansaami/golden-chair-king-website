@@ -80,9 +80,6 @@ ${categories.map((c) => `            <li><a href="shop.html?cat=${c.slug}" class
           <input type="search" name="q" placeholder="Search chairs…" data-bn-ph="চেয়ার খুঁজুন…" aria-label="Search chairs" class="input input-sm w-full border-base-300 bg-base-100 pl-8.5 text-sm text-navy-900 placeholder:text-base-content/40 focus:border-gold-400 focus:outline-none">
           <svg class="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-base-content/40"><use href="#i-search"/></svg>
         </form>
-        <button type="button" class="lang-toggle btn btn-sm border-base-300 bg-base-100 px-3 font-bold text-gold-700 hover:border-gold-400 hover:bg-gold-400 hover:text-navy-950" aria-label="Switch to Bangla">
-          <span class="lang-toggle-label">বাংলা</span>
-        </button>
         <button type="button" data-open-cart class="btn btn-circle btn-ghost relative text-navy-900" aria-label="Open cart">
           <svg class="size-5.5"><use href="#i-cart"/></svg>
           <span class="cart-count badge badge-secondary badge-sm absolute -top-0.5 -right-0.5 border-0 font-extrabold" style="display:none">0</span>
@@ -214,11 +211,16 @@ ${categories.map((c) => `          <li><a href="shop.html?cat=${c.slug}" class="
     <div class="border-t border-white/10">
       <div class="container-x flex flex-col items-center justify-between gap-3 py-5 text-center text-xs text-white/45 sm:flex-row sm:text-left">
         <p>© 2026 <span class="font-semibold text-white/70">${SITE.name}</span>. <span data-bn="সর্বস্বত্ব সংরক্ষিত।">All rights reserved.</span></p>
-        <nav class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1" aria-label="Legal">
-          <a href="privacy-policy.html" class="transition-colors hover:text-gold-400" data-bn="গোপনীয়তা নীতি">Privacy Policy</a>
-          <a href="terms.html" class="transition-colors hover:text-gold-400" data-bn="শর্তাবলী">Terms of Service</a>
-          <a href="refund-exchange.html" class="transition-colors hover:text-gold-400" data-bn="রিফান্ড ও এক্সচেঞ্জ">Refund &amp; Exchange</a>
-        </nav>
+        <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2.5">
+          <nav class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1" aria-label="Legal">
+            <a href="privacy-policy.html" class="transition-colors hover:text-gold-400" data-bn="গোপনীয়তা নীতি">Privacy Policy</a>
+            <a href="terms.html" class="transition-colors hover:text-gold-400" data-bn="শর্তাবলী">Terms of Service</a>
+            <a href="refund-exchange.html" class="transition-colors hover:text-gold-400" data-bn="রিফান্ড ও এক্সচেঞ্জ">Refund &amp; Exchange</a>
+          </nav>
+          <button type="button" class="lang-toggle inline-flex items-center rounded-full border border-gold-400/30 px-3.5 py-1.5 text-[11px] font-extrabold tracking-wide text-gold-300 transition-colors hover:border-gold-400 hover:bg-gold-400 hover:text-navy-950" aria-label="Switch to Bangla">
+            <span class="lang-toggle-label">বাংলা</span>
+          </button>
+        </div>
       </div>
     </div>
   </footer>`;
