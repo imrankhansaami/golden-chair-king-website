@@ -509,7 +509,7 @@ ${overlays()}
 
         <div class="relative mx-auto w-full max-w-xl lg:max-w-none">
           <div class="absolute -inset-2 rounded-[30px] border border-gold-400/25" aria-hidden="true"></div>
-          <img src="assets/img/hero-showroom.webp" alt="${SITE.name} showroom in Dhaka — executive office chair, desk and a navy-gold interior" width="1000" height="750" fetchpriority="high" class="img-fade relative aspect-[4/3] w-full rounded-3xl border border-gold-400/40 object-cover shadow-[0_30px_80px_-20px_rgba(0,0,0,.65)] sm:aspect-[16/10]">
+          <img src="assets/img/banner-gck-crown.webp" alt="Golden Chair King — brown leather executive chair with the gold crown emblem" width="1400" height="933" fetchpriority="high" class="img-fade relative aspect-[4/3] w-full rounded-3xl border border-gold-400/40 object-cover shadow-[0_30px_80px_-20px_rgba(0,0,0,.65)] sm:aspect-[16/10]">
           <div class="floaty absolute -bottom-5 left-4 rounded-2xl bg-base-100 px-4 py-3 shadow-xl ring-1 ring-base-300 sm:left-6">
             <p class="font-display text-lg font-bold text-navy-900">12,000+</p>
             <p class="text-[11px] font-semibold text-base-content/60" data-bn="সন্তুষ্ট ক্রেতা">Happy Customers</p>
