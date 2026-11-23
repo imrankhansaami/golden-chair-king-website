@@ -638,6 +638,60 @@
     });
   }
 
+  /* ================= Hero slider ================= */
+  function initHeroSlider() {
+    var slider = document.getElementById("hero-slider");
+    if (!slider) return;
+    var track = document.getElementById("hero-track");
+    if (!track) return;
+    var slides = Array.prototype.slice.call(track.children);
+    if (slides.length < 2) return;
+    var dots = Array.prototype.slice.call(slider.querySelectorAll("[data-hero-dot]"));
+    var prev = slider.querySelector("[data-hero-prev]");
+    var next = slider.querySelector("[data-hero-next]");
+    var idx = 0;
+    var timer = null;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function go(i) {
+      idx = (i % slides.length + slides.length) % slides.length;
+      track.style.transform = "translateX(-" + idx * 100 + "%)";
+      dots.forEach(function (d, k) { d.classList.toggle("active", k === idx); });
+      slides.forEach(function (s, k) { s.setAttribute("aria-label", (k + 1) + " of " + slides.length); });
+    }
+    function start() {
+      if (reduce || timer) return;
+      timer = window.setInterval(function () { go(idx + 1); }, 6500);
+    }
+    function stop() {
+      if (timer) { window.clearInterval(timer); timer = null; }
+    }
+    function manual(i) { go(i); stop(); start(); }
+
+    if (prev) prev.addEventListener("click", function () { manual(idx - 1); });
+    if (next) next.addEventListener("click", function () { manual(idx + 1); });
+    dots.forEach(function (d, k) { d.addEventListener("click", function () { manual(k); }); });
+    slider.addEventListener("mouseenter", stop);
+    slider.addEventListener("mouseleave", start);
+
+    var x0 = null;
+    slider.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    slider.addEventListener("touchend", function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      x0 = null;
+      if (Math.abs(dx) > 45) manual(idx + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+
+    slider.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") manual(idx - 1);
+      if (e.key === "ArrowRight") manual(idx + 1);
+    });
+
+    go(0);
+    start();
+  }
+
   /* ================= Delegated events ================= */
   document.addEventListener("click", function (e) {
     var t = e.target;
@@ -723,6 +777,7 @@
     initCheckout();
     initTracking();
     initContactForm();
+    initHeroSlider();
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);

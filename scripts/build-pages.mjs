@@ -442,7 +442,7 @@ const homePage = () => `<!doctype html>
 
   <!-- Styles & assets -->
   <link rel="stylesheet" href="assets/css/site.css?v=${ASSET_V}">
-  <link rel="preload" as="image" href="assets/img/hero-showroom.webp">
+  <link rel="preload" as="image" href="assets/img/banner-gck-crown.webp">
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -485,53 +485,102 @@ ${overlays()}
 
   <main id="main">
 
-    <!-- ======= Hero ======= -->
-    <section class="relative overflow-hidden bg-[#02101f]">
-      <div class="pointer-events-none absolute -top-32 right-[-10%] size-[480px] rounded-full bg-gold-500/15 blur-[130px]" aria-hidden="true"></div>
-      <div class="pointer-events-none absolute bottom-[-30%] left-[-10%] size-[420px] rounded-full bg-navy-700/50 blur-[120px]" aria-hidden="true"></div>
-      <div class="pointer-events-none absolute inset-0 opacity-70 [background-image:radial-gradient(rgba(233,199,134,0.13)_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(70%_60%_at_55%_40%,black,transparent)]" aria-hidden="true"></div>
+    <!-- ======= Hero slider ======= -->
+    <section id="hero-slider" class="relative overflow-hidden bg-[#02101f]" aria-roledescription="carousel" aria-label="Featured collections">
 
-      <div class="container-x relative grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-2 lg:gap-10 lg:py-28">
-        <div>
-          <span class="hero-anim d1 inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/10 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-gold-300 sm:text-xs">
-            <svg class="size-3.5 shrink-0"><use href="#i-pin"/></svg>
-            <span data-bn="যাত্রাবাড়ী, ঢাকার বিশ্বস্ত চেয়ার শোরুম">Trusted Chair Showroom in Jatrabari, Dhaka</span>
-          </span>
-          <h1 class="hero-anim d2 mt-5 font-display text-[32px] leading-[1.15] font-semibold text-white sm:text-5xl lg:text-[52px]">
-            <span data-bn="প্রিমিয়াম অফিস চেয়ার">Premium Office Chairs</span>
-            <span class="gold-text mt-1 block" data-bn="কাজে ও আরামে সেরা">For Work &amp; Comfort</span>
-          </h1>
-          <p class="hero-anim d3 mt-5 max-w-xl text-[15px] leading-relaxed text-white/75 sm:text-base" data-bn="বজ চেয়ার, এরগনমিক হাই-ব্যাক মেশ, স্টাফ ও ভিজিটর চেয়ার — ওয়ারেন্টিসহ সারা বাংলাদেশে আপনার দরজায় ডেলিভারি।">Boss chairs, ergonomic high-back mesh, staff &amp; visitor seating — warranty-backed and delivered to your door anywhere in Bangladesh.</p>
-          <div class="hero-anim d4 mt-7 flex flex-wrap gap-3">
-            <a href="shop.html" class="group btn btn-gold btn-lg font-extrabold">
-              <span data-bn="সব চেয়ার দেখুন">Shop All Chairs</span>
-              <svg class="size-5 transition-transform duration-300 group-hover:translate-x-1"><use href="#i-arrow"/></svg>
-            </a>
-            <a href="https://wa.me/${SITE.wa}?text=Assalamu%20Alaikum!%20I%20would%20like%20to%20know%20more%20about%20your%20chairs." target="_blank" rel="noopener" class="btn btn-lg border-gold-400/60 bg-transparent font-bold text-gold-300 hover:border-gold-400 hover:bg-gold-400 hover:text-navy-950">
-              <svg class="size-5"><use href="#i-wa"/></svg>
-              <span data-bn="হোয়াটসঅ্যাপে অর্ডার">Order on WhatsApp</span>
-            </a>
+      <div id="hero-track" class="flex transition-transform duration-700 ease-out">
+        <!-- Slide 1 — brand -->
+        <div class="relative w-full shrink-0 overflow-hidden" role="group" aria-roledescription="slide" aria-label="1 of 3">
+          <img src="assets/img/banner-gck-crown.webp" alt="Golden Chair King — brown leather executive chair with the gold crown emblem" width="1400" height="933" fetchpriority="high" class="absolute inset-0 h-full w-full object-cover object-center">
+          <div class="absolute inset-0 bg-gradient-to-r from-[#02101f] via-[#02101f]/85 to-[#02101f]/35" aria-hidden="true"></div>
+          <div class="container-x relative flex min-h-[540px] flex-col justify-center py-14 sm:min-h-[600px] sm:py-16 lg:py-20">
+            <span class="hero-anim d1 inline-flex w-fit items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/10 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-gold-300 sm:text-xs">
+              <svg class="size-3.5 shrink-0"><use href="#i-pin"/></svg>
+              <span data-bn="যাত্রাবাড়ী, ঢাকার বিশ্বস্ত চেয়ার শোরুম">Trusted Chair Showroom in Jatrabari, Dhaka</span>
+            </span>
+            <h1 class="hero-anim d2 mt-5 max-w-3xl font-display text-[32px] leading-[1.15] font-semibold text-white sm:text-5xl lg:text-[54px]">
+              <span data-bn="প্রিমিয়াম অফিস চেয়ার">Premium Office Chairs</span>
+              <span class="gold-text mt-1 block" data-bn="কাজে ও আরামে সেরা">For Work &amp; Comfort</span>
+            </h1>
+            <p class="hero-anim d3 mt-5 max-w-xl text-[15px] leading-relaxed text-white/75 sm:text-base" data-bn="বজ চেয়ার, এরগনমিক হাই-ব্যাক মেশ, স্টাফ ও ভিজিটর চেয়ার — ওয়ারেন্টিসহ সারা বাংলাদেশে আপনার দরজায় ডেলিভারি।">Boss chairs, ergonomic high-back mesh, staff &amp; visitor seating — warranty-backed and delivered to your door anywhere in Bangladesh.</p>
+            <div class="hero-anim d4 mt-7 flex flex-wrap gap-3">
+              <a href="shop.html" class="group btn btn-gold btn-lg font-extrabold">
+                <span data-bn="সব চেয়ার দেখুন">Shop All Chairs</span>
+                <svg class="size-5 transition-transform duration-300 group-hover:translate-x-1"><use href="#i-arrow"/></svg>
+              </a>
+              <a href="https://wa.me/${SITE.wa}?text=Assalamu%20Alaikum!%20I%20would%20like%20to%20know%20more%20about%20your%20chairs." target="_blank" rel="noopener" class="btn btn-lg border-gold-400/60 bg-transparent font-bold text-gold-300 hover:border-gold-400 hover:bg-gold-400 hover:text-navy-950">
+                <svg class="size-5"><use href="#i-wa"/></svg>
+                <span data-bn="হোয়াটসঅ্যাপে অর্ডার">Order on WhatsApp</span>
+              </a>
+            </div>
+            <ul class="hero-anim d5 mt-9 grid max-w-2xl grid-cols-2 gap-x-4 gap-y-3 sm:flex sm:flex-wrap sm:gap-x-7">
+              <li class="trust-chip"><svg class="size-4 shrink-0 text-gold-400"><use href="#i-rotate"/></svg><span data-bn="৭ দিনের সহজ এক্সচেঞ্জ">7-Day Easy Exchange</span></li>
+              <li class="trust-chip"><svg class="size-4 shrink-0 text-gold-400"><use href="#i-truck"/></svg><span data-bn="সারা দেশে ডেলিভারি">Nationwide Delivery</span></li>
+              <li class="trust-chip"><svg class="size-4 shrink-0 text-gold-400"><use href="#i-shield"/></svg><span data-bn="ক্যাশ অন ডেলিভারি · বিকাশ · নগদ">COD · bKash · Nagad</span></li>
+              <li class="trust-chip"><svg class="size-4 shrink-0 text-gold-400"><use href="#i-tag"/></svg><span data-bn="নির্বাচিত পণ্যে ওয়ারেন্টি">Warranty on Selected Items</span></li>
+            </ul>
           </div>
-          <ul class="hero-anim d5 mt-9 grid grid-cols-2 gap-x-4 gap-y-3 sm:flex sm:flex-wrap sm:gap-x-7">
-            <li class="trust-chip"><svg class="size-4 shrink-0 text-gold-400"><use href="#i-rotate"/></svg><span data-bn="৭ দিনের সহজ এক্সচেঞ্জ">7-Day Easy Exchange</span></li>
-            <li class="trust-chip"><svg class="size-4 shrink-0 text-gold-400"><use href="#i-truck"/></svg><span data-bn="সারা দেশে ডেলিভারি">Nationwide Delivery</span></li>
-            <li class="trust-chip"><svg class="size-4 shrink-0 text-gold-400"><use href="#i-shield"/></svg><span data-bn="ক্যাশ অন ডেলিভারি · বিকাশ · নগদ">COD · bKash · Nagad</span></li>
-            <li class="trust-chip"><svg class="size-4 shrink-0 text-gold-400"><use href="#i-tag"/></svg><span data-bn="নির্বাচিত পণ্যে ওয়ারেন্টি">Warranty on Selected Items</span></li>
-          </ul>
         </div>
 
-        <div class="relative mx-auto w-full max-w-xl lg:max-w-none">
-          <div class="absolute -inset-2 rounded-[30px] border border-gold-400/25" aria-hidden="true"></div>
-          <img src="assets/img/banner-gck-crown.webp" alt="Golden Chair King — brown leather executive chair with the gold crown emblem" width="1400" height="933" fetchpriority="high" class="img-fade relative aspect-[4/3] w-full rounded-3xl border border-gold-400/40 object-cover shadow-[0_30px_80px_-20px_rgba(0,0,0,.65)] sm:aspect-[16/10]">
-          <div class="floaty absolute -bottom-5 left-4 rounded-2xl bg-base-100 px-4 py-3 shadow-xl ring-1 ring-base-300 sm:left-6">
-            <p class="font-display text-lg font-bold text-navy-900">12,000+</p>
-            <p class="text-[11px] font-semibold text-base-content/60" data-bn="সন্তুষ্ট ক্রেতা">Happy Customers</p>
-          </div>
-          <div class="floaty-slow absolute -top-4 right-4 hidden rounded-2xl bg-gold-400 px-4 py-2 font-bold text-navy-950 shadow-xl sm:block">
-            <p class="text-sm leading-none">4.9 ★</p>
-            <p class="mt-1 text-[10px] font-semibold text-navy-950/70" data-bn="ক্রেতা রেটিং">Customer Rating</p>
+        <!-- Slide 2 — showroom -->
+        <div class="relative w-full shrink-0 overflow-hidden" role="group" aria-roledescription="slide" aria-label="2 of 3">
+          <img src="assets/img/hero-showroom.webp" alt="Golden Chair King showroom in Dhaka — executive desk with a navy and gold interior" width="1600" height="1200" loading="lazy" class="absolute inset-0 h-full w-full object-cover object-center">
+          <div class="absolute inset-0 bg-gradient-to-r from-[#02101f] via-[#02101f]/85 to-[#02101f]/35" aria-hidden="true"></div>
+          <div class="container-x relative flex min-h-[540px] flex-col justify-center py-14 sm:min-h-[600px] sm:py-16 lg:py-20">
+            <span class="inline-flex w-fit items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/10 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-gold-300 sm:text-xs" data-bn="শোরুম কালেকশন">The Showroom Collection</span>
+            <h2 class="mt-5 max-w-3xl font-display text-[30px] leading-[1.15] font-semibold text-white sm:text-5xl lg:text-[52px]">
+              <span data-bn="আপনার অফিস সাজান">Furnish Your Office</span>
+              <span class="gold-text mt-1 block" data-bn="গোল্ডেন স্টাইলে">In Golden Style</span>
+            </h2>
+            <p class="mt-5 max-w-xl text-[15px] leading-relaxed text-white/75 sm:text-base" data-bn="এক্সিকিউটিভ ও বজ চেয়ার, উডেন ক্লাসিক আর এরগনমিক মেশ — নিজের টিমে চেক, প্যাক ও ডেলিভারি।">Executive and boss chairs, wooden classics and ergonomic mesh — inspected, wrapped and delivered by our own team.</p>
+            <div class="mt-7 flex flex-wrap gap-3">
+              <a href="shop.html" class="group btn btn-gold btn-lg font-extrabold">
+                <span data-bn="কালেকশন দেখুন">Browse the Collection</span>
+                <svg class="size-5 transition-transform duration-300 group-hover:translate-x-1"><use href="#i-arrow"/></svg>
+              </a>
+              <a href="about.html" class="btn btn-lg border-gold-400/60 bg-transparent font-bold text-gold-300 hover:border-gold-400 hover:bg-gold-400 hover:text-navy-950">
+                <span data-bn="আমাদের সম্পর্কে">Visit the Showroom</span>
+              </a>
+            </div>
           </div>
         </div>
+
+        <!-- Slide 3 — delivery -->
+        <div class="relative w-full shrink-0 overflow-hidden" role="group" aria-roledescription="slide" aria-label="3 of 3">
+          <img src="assets/img/scenes/home-office.webp" alt="A Golden Chair King mesh chair at a modern desk — nationwide delivery" width="1536" height="1024" loading="lazy" class="absolute inset-0 h-full w-full object-cover object-center">
+          <div class="absolute inset-0 bg-gradient-to-r from-[#02101f] via-[#02101f]/85 to-[#02101f]/35" aria-hidden="true"></div>
+          <div class="container-x relative flex min-h-[540px] flex-col justify-center py-14 sm:min-h-[600px] sm:py-16 lg:py-20">
+            <span class="inline-flex w-fit items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/10 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-gold-300 sm:text-xs" data-bn="সারা দেশে ডেলিভারি">Nationwide Delivery</span>
+            <h2 class="mt-5 max-w-3xl font-display text-[30px] leading-[1.15] font-semibold text-white sm:text-5xl lg:text-[52px]">
+              <span data-bn="৬৪ জেলায় পৌঁছে যাবে">Delivered to All 64 Districts</span>
+              <span class="gold-text mt-1 block" data-bn="পেমেন্ট চেয়ার হাতে পেয়ে">Pay When It Arrives</span>
+            </h2>
+            <p class="mt-5 max-w-xl text-[15px] leading-relaxed text-white/75 sm:text-base" data-bn="ক্যাশ অন ডেলিভারি, বিকাশ বা নগদ — হোয়াটসঅ্যাপে অর্ডার কনফার্ম, তারপরই ডিসপ্যাচ।">Cash on delivery, bKash or Nagad — order on WhatsApp and we confirm everything before dispatch.</p>
+            <div class="mt-7 flex flex-wrap gap-3">
+              <a href="offers.html" class="group btn btn-gold btn-lg font-extrabold">
+                <span data-bn="অফার দেখুন">View Offers</span>
+                <svg class="size-5 transition-transform duration-300 group-hover:translate-x-1"><use href="#i-arrow"/></svg>
+              </a>
+              <a href="https://wa.me/${SITE.wa}?text=Assalamu%20Alaikum!%20I%20want%20to%20order%20a%20chair." target="_blank" rel="noopener" class="btn btn-lg border-0 bg-[#25D366] font-bold text-white hover:bg-[#1fba57]">
+                <svg class="size-5"><use href="#i-wa"/></svg>
+                <span data-bn="হোয়াটসঅ্যাপে অর্ডার">Order on WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- slider controls -->
+      <button type="button" data-hero-prev class="btn btn-circle absolute top-1/2 left-3 z-10 hidden -translate-y-1/2 border border-white/15 bg-[#02101f]/50 text-gold-300 backdrop-blur transition-colors hover:border-gold-400 hover:text-gold-200 sm:inline-flex lg:left-6" aria-label="Previous slide">
+        <svg class="size-5 -rotate-180"><use href="#i-arrow"/></svg>
+      </button>
+      <button type="button" data-hero-next class="btn btn-circle absolute top-1/2 right-3 z-10 hidden -translate-y-1/2 border border-white/15 bg-[#02101f]/50 text-gold-300 backdrop-blur transition-colors hover:border-gold-400 hover:text-gold-200 sm:inline-flex lg:right-6" aria-label="Next slide">
+        <svg class="size-5"><use href="#i-arrow"/></svg>
+      </button>
+      <div class="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2">
+        <button type="button" data-hero-dot class="hero-dot active" aria-label="Go to slide 1"></button>
+        <button type="button" data-hero-dot class="hero-dot" aria-label="Go to slide 2"></button>
+        <button type="button" data-hero-dot class="hero-dot" aria-label="Go to slide 3"></button>
       </div>
     </section>
 
