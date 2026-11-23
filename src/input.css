@@ -106,7 +106,7 @@
   }
 
   .nav-link {
-    @apply rounded-lg px-3 py-2 text-sm font-semibold text-navy-800/80 transition-colors hover:bg-navy-950/5 hover:text-gold-600;
+    @apply relative rounded-lg px-3 py-2 text-sm font-semibold text-navy-800/80 transition-colors hover:bg-navy-950/5 hover:text-gold-600;
   }
   .nav-link.active {
     @apply text-gold-600;
@@ -163,16 +163,18 @@
   transform: translateY(18px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
+.reveal-left {
+  transform: translateX(-26px);
+}
+.reveal-right {
+  transform: translateX(26px);
+}
+.reveal-zoom {
+  transform: scale(0.94);
+}
 .reveal-in {
   opacity: 1;
   transform: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
 }
 
 /* ---------- toasts ---------- */
@@ -186,12 +188,23 @@
   transform: none;
 }
 
-/* ---------- header shadow on scroll ---------- */
+/* ---------- header shadow + shrink on scroll ---------- */
 #site-header {
   transition: box-shadow 0.3s ease;
 }
 #site-header.is-scrolled {
   box-shadow: 0 12px 32px -14px rgba(3, 24, 45, 0.55);
+}
+#site-header .header-row {
+  transition: height 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+#site-header.is-scrolled .header-row {
+  height: 3.75rem;
+}
+@media (min-width: 1024px) {
+  #site-header.is-scrolled .header-row {
+    height: 4.25rem;
+  }
 }
 
 /* ---------- space for the mobile bottom nav ---------- */
@@ -201,5 +214,187 @@
 @media (min-width: 1024px) {
   .has-bottom-nav {
     padding-bottom: 0;
+  }
+}
+
+/* ============================================================
+   Upgrade: motion, gradients & micro-interactions
+   ============================================================ */
+
+/* gold gradient text (hero accent, section highlights) */
+.gold-text {
+  background: linear-gradient(115deg, #f5e6c8 0%, #e9c786 38%, #d9b26c 62%, #f2dcae 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* hero entrance animation */
+@keyframes heroUp {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-anim {
+  opacity: 0;
+  animation: heroUp 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+.d1 { animation-delay: 0.08s; }
+.d2 { animation-delay: 0.18s; }
+.d3 { animation-delay: 0.3s; }
+.d4 { animation-delay: 0.42s; }
+.d5 { animation-delay: 0.54s; }
+.d6 { animation-delay: 0.66s; }
+
+/* gentle floating (hero stat cards) */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+.floaty { animation: floaty 5.5s ease-in-out infinite; }
+.floaty-slow { animation: floaty 7.5s ease-in-out infinite; }
+
+/* marquee strip */
+@keyframes marqueeX {
+  to { transform: translateX(-50%); }
+}
+.marquee-track { animation: marqueeX 34s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+/* light sweep across product images on hover */
+.shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.5) 50%, transparent 58%);
+  transform: translateX(-130%) skewX(-8deg);
+  transition: transform 0.9s ease;
+  pointer-events: none;
+}
+.group:hover .shine::after {
+  transform: translateX(130%) skewX(-8deg);
+}
+
+/* section title underline draw-in */
+.title-underline::after {
+  content: "";
+  display: block;
+  margin-top: 0.75rem;
+  width: 68px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #e9c786, #b9924b);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.2s;
+}
+.title-underline-center::after {
+  margin-left: auto;
+  margin-right: auto;
+  transform-origin: center;
+}
+.title-underline.title-drawn::after {
+  transform: scaleX(1);
+}
+
+/* decorative quote mark on testimonial cards */
+.quote-card::before {
+  content: "\201D";
+  position: absolute;
+  top: 2px;
+  right: 20px;
+  font-family: var(--font-display);
+  font-size: 68px;
+  line-height: 1;
+  color: rgba(233, 199, 134, 0.16);
+  pointer-events: none;
+}
+
+/* countdown digit tick */
+@keyframes cdTick {
+  0% {
+    transform: translateY(7px);
+    opacity: 0.2;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+.cd-v.tick {
+  animation: cdTick 0.35s ease;
+}
+
+/* image fade-in (pure CSS — deterministic, never stuck) */
+@keyframes imgIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.img-fade {
+  animation: imgIn 0.7s ease 0.05s both;
+}
+
+/* attention pulse for the floating WhatsApp button */
+@keyframes waPulse {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.45); }
+  70% { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+.wa-pulse {
+  animation: waPulse 2.8s ease-out infinite;
+}
+
+/* animated underline for header nav links */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 7px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #e9c786, #b9924b);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s ease;
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-anim {
+    animation: none;
+    opacity: 1;
+  }
+  .floaty,
+  .floaty-slow,
+  .marquee-track,
+  .wa-pulse,
+  .cd-v.tick {
+    animation: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .title-underline::after {
+    transform: scaleX(1);
+    transition: none;
+  }
+  .shine::after {
+    display: none;
   }
 }

@@ -202,33 +202,98 @@
         var hEl = n.querySelector('[data-cd="h"]');
         var mEl = n.querySelector('[data-cd="m"]');
         var sEl = n.querySelector('[data-cd="s"]');
-        if (hEl) hEl.textContent = h;
-        if (mEl) mEl.textContent = m;
-        if (sEl) sEl.textContent = s;
+        if (hEl && hEl.textContent !== h) { hEl.textContent = h; pulse(hEl); }
+        if (mEl && mEl.textContent !== m) { mEl.textContent = m; pulse(mEl); }
+        if (sEl && sEl.textContent !== s) { sEl.textContent = s; pulse(sEl); }
       });
+    }
+    function pulse(el) {
+      el.classList.remove("tick");
+      void el.offsetWidth;
+      el.classList.add("tick");
     }
     tick();
     setInterval(tick, 1000);
   }
 
-  /* ================= Scroll reveal ================= */
+  /* ================= Scroll reveal (stagger + variants + underline draw) ================= */
   function initReveal() {
     var els = $$("[data-reveal]");
     if (!els.length) return;
+
+    // stagger: direct children of [data-stagger] containers reveal in sequence
+    $$("[data-stagger]").forEach(function (box) {
+      var kids = Array.prototype.slice.call(box.querySelectorAll(":scope > [data-reveal]"));
+      kids.forEach(function (el, i) {
+        el.style.transitionDelay = Math.min(i * 70, 420) + "ms";
+      });
+    });
+
     if (!("IntersectionObserver" in window)) {
       els.forEach(function (el) { el.classList.add("reveal", "reveal-in"); });
       return;
     }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting) {
-          en.target.classList.add("reveal-in");
-          io.unobserve(en.target);
-        }
+        if (!en.isIntersecting) return;
+        var el = en.target;
+        el.classList.add("reveal-in");
+        io.unobserve(el);
+        // draw section-title underlines inside the revealed block
+        Array.prototype.slice.call(el.querySelectorAll(".title-underline")).forEach(function (t) {
+          t.classList.add("title-drawn");
+        });
+        // free the element from reveal transitions so hover stays snappy
+        var delay = parseFloat(el.style.transitionDelay) || 0;
+        window.setTimeout(function () {
+          el.classList.remove("reveal", "reveal-in");
+          el.style.transitionDelay = "";
+        }, 1300 + delay);
       });
     }, { threshold: 0.1, rootMargin: "0px 0px -36px 0px" });
     els.forEach(function (el) { el.classList.add("reveal"); io.observe(el); });
   }
+
+  /* ================= Animated counters ================= */
+  function initCounters() {
+    var els = $$("[data-count]");
+    if (!els.length) return;
+    function animate(el) {
+      var target = parseFloat(el.getAttribute("data-count") || "0");
+      var dec = parseInt(el.getAttribute("data-decimals") || "0", 10);
+      var start = null;
+      var DUR = 1400;
+      function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min(1, (ts - start) / DUR);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = (target * eased).toLocaleString("en-IN", {
+          minimumFractionDigits: dec,
+          maximumFractionDigits: dec
+        });
+        if (p < 1) window.requestAnimationFrame(step);
+      }
+      window.requestAnimationFrame(step);
+    }
+    if (!("IntersectionObserver" in window)) {
+      els.forEach(animate);
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          animate(en.target);
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    els.forEach(function (el) {
+      el.textContent = "0";
+      io.observe(el);
+    });
+  }
+
+  /* ================= Lazy image fade (handled in CSS via .img-fade) ================= */
 
   /* ================= Scroll UI (header shadow, back to top) ================= */
   function initScrollUI() {
@@ -313,6 +378,7 @@
     applyLang(currentLang());
     renderCart();
     initCountdown();
+    initCounters();
     initReveal();
     initScrollUI();
   }
