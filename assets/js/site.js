@@ -690,13 +690,25 @@
     slider.addEventListener("mouseleave", start);
 
     var x0 = null;
+    var swiped = false;
     slider.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
     slider.addEventListener("touchend", function (e) {
       if (x0 === null) return;
       var dx = e.changedTouches[0].clientX - x0;
       x0 = null;
-      if (Math.abs(dx) > 45) manual(idx + (dx < 0 ? 1 : -1));
+      if (Math.abs(dx) > 45) {
+        manual(idx + (dx < 0 ? 1 : -1));
+        swiped = true;
+        window.setTimeout(function () { swiped = false; }, 400);
+      }
     }, { passive: true });
+    // swallow the click that follows a swipe so slide links don't fire by accident
+    slider.addEventListener("click", function (e) {
+      if (swiped) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
 
     slider.addEventListener("keydown", function (e) {
       if (e.key === "ArrowLeft") manual(idx - 1);
