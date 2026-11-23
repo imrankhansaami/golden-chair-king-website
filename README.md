@@ -3,6 +3,9 @@
 Static ecommerce site for **Golden Chair King** (South Jatrabari, Dhaka) — built with
 **Tailwind CSS v4 + daisyUI v5**, mobile-first, SEO optimized, bilingual (English / বাংলা).
 
+**Live preview (GitHub Pages):** https://imrankhansaami.github.io/golden-chair-king-website/
+— every push to `main` redeploys automatically (~1 minute).
+
 - Live structure: plain HTML files — host on any static hosting (Vercel, Netlify, Cloudflare Pages, cPanel).
 - No backend required: the cart runs in the browser (localStorage) and orders go through
   WhatsApp / email. Real payment (SSLCommerz / bKash API) can be plugged into `checkout.html` later.
@@ -75,9 +78,14 @@ npm run serve            # preview at http://localhost:5173
 
 ## Deploy
 
-1. Run `npm run build`.
-2. Upload the folder (excluding `node_modules`, `src`, `scripts`, `assets/img/src`) to any host.
-3. Point `goldenchairking.com` at it. All URLs are relative — works from any folder.
+Currently live on **GitHub Pages** (repo is public — required for Pages on a free plan):
+https://imrankhansaami.github.io/golden-chair-king-website/
+Push to `main` and it redeploys in about a minute.
+
+For the real domain, either point `goldenchairking.com` at GitHub Pages (add a custom
+domain in repo Settings → Pages + DNS records), or upload the folder (excluding
+`node_modules`, `src`, `scripts`, `assets/img/src`) to any static host — all URLs are
+relative, so it works from any folder or domain.
 
 ## Pending / next steps
 
