@@ -77,7 +77,7 @@ ${categories.map((c) => `            <li><a href="shop.html?cat=${c.slug}" class
             <li class="mt-1 border-t border-base-200 pt-1"><a href="shop.html" class="font-extrabold text-primary"><span data-bn="সব চেয়ার দেখুন">View All Chairs</span><svg class="size-4"><use href="#i-arrow"/></svg></a></li>
           </ul>
         </div>
-        <a href="offers.html" class="nav-link" data-bn="অফার">Offers</a>
+        <a href="offers.html" class="nav-link${active === "offers" ? " active" : ""}"${active === "offers" ? ' aria-current="page"' : ""} data-bn="অফার">Offers</a>
         <a href="about.html" class="nav-link${active === "about" ? " active" : ""}" data-bn="আমাদের সম্পর্কে">About</a>
         <a href="contact.html" class="nav-link${active === "contact" ? " active" : ""}" data-bn="যোগাযোগ">Contact</a>
       </nav>
@@ -1340,28 +1340,34 @@ ${pageHero({
 
 const offersSorted = () => products.slice().sort((a, b) => (1 - b.price / b.oldPrice) - (1 - a.price / a.oldPrice));
 
-const offersPage = () => shellTop("shop", {
-  title: "Offers & Deals — Up to 30% Off Office Chairs | Golden Chair King",
-  desc: "Limited-time chair offers at Golden Chair King — up to 30% off office chairs in Dhaka with extra 5% off on advance bKash/Nagad payment. Nationwide delivery.",
+const offersPage = () => shellTop("offers", {
+  title: `Offers & Deals — Up to ${Math.max(...products.map((p) => discount(p)))}% Off Office Chairs | Golden Chair King`,
+  desc: "Limited-time chair offers at Golden Chair King — real discounts on office chairs in Dhaka with extra 5% off on advance bKash/Nagad payment. Nationwide delivery.",
   canonical: SITE.domain + "/offers.html",
 }) + `
-${pageHero({
-  eyebrow: "Offers",
-  eyebrowBn: "অফার",
-  title: "Offers & Deals",
-  titleBn: "অফার ও ডিল",
-  sub: "Limited-time prices on office chairs — extra 5% off when you pay in advance via bKash or Nagad.",
-  crumbs: [["Home", "index.html"], ["Offers", null]],
-})}
-    <section class="relative overflow-hidden bg-[#02101f] py-12 sm:py-16">
-      <div class="absolute inset-0 bg-gradient-to-r from-[#02101f] via-[#02101f]/90 to-[#02101f]/60" aria-hidden="true"></div>
-      <div class="container-x relative grid items-center gap-8 lg:grid-cols-[1.2fr_.8fr]">
-        <div>
-          <span class="badge border-0 bg-gold-400 font-extrabold text-navy-950" data-bn="সীমিত সময়ের অফার">Limited-Time Offer</span>
-          <h2 class="title-underline mt-4 font-display text-2xl leading-tight font-semibold text-white sm:text-3xl">
-            <span data-bn="সব চেয়ারে — সর্বোচ্চ">Save up to</span> <span class="text-gold-400">${Math.max(...products.map((p) => discount(p)))}% OFF</span>
-          </h2>
-          <div class="mt-6 flex items-center gap-2 sm:gap-3" data-countdown aria-label="Offer countdown">
+    <section class="relative overflow-hidden bg-[#02101f]">
+      <div class="pointer-events-none absolute -top-24 right-[-5%] size-[360px] rounded-full bg-gold-500/12 blur-[110px]" aria-hidden="true"></div>
+      <div class="pointer-events-none absolute -bottom-32 left-[-10%] size-[420px] rounded-full bg-navy-700/40 blur-[130px]" aria-hidden="true"></div>
+      <div class="pointer-events-none absolute inset-0 opacity-60 [background-image:radial-gradient(rgba(233,199,134,0.12)_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(70%_60%_at_55%_30%,black,transparent)]" aria-hidden="true"></div>
+
+      <div class="container-x relative pt-10 sm:pt-14">
+${crumbNav([["Home", "index.html"], ["Offers", null]])}
+        <p class="hero-anim d1 eyebrow" data-bn="অফার">Offers</p>
+        <h1 class="hero-anim d2 mt-2 font-display text-[26px] font-semibold text-white sm:text-4xl" data-bn="অফার ও ডিল">Offers &amp; Deals</h1>
+        <p class="hero-anim d3 mt-3 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">Limited-time prices on office chairs — extra 5% off when you pay in advance via bKash or Nagad.</p>
+      </div>
+
+      <div class="container-x relative pt-8 pb-12 sm:pt-10 sm:pb-16">
+        <div class="hero-anim d4 overflow-hidden rounded-[28px] border border-gold-400/15 bg-gradient-to-b from-white/[0.06] via-white/[0.02] to-transparent p-6 sm:p-10">
+          <div class="grid items-center gap-10 lg:grid-cols-[1.25fr_.75fr]">
+            <div>
+              <span class="badge border-0 bg-gold-400 font-extrabold text-navy-950" data-bn="সীমিত সময়ের অফার">Limited-Time Offer</span>
+              <h2 class="mt-4 font-display text-2xl leading-tight font-semibold text-white sm:text-3xl lg:text-4xl">
+                <span data-bn="সব চেয়ারে — সর্বোচ্চ">Save up to</span>
+                <span class="gold-text" data-bn="${bnNum(Math.max(...products.map((p) => discount(p))))}% ছাড়">${Math.max(...products.map((p) => discount(p)))}% OFF</span>
+              </h2>
+              <p class="mt-3 max-w-md text-sm leading-relaxed text-white/65" data-bn="অফার আজ রাত ১২টায় শেষ — টাইমার শেষ হওয়ার আগেই আপনার চেয়ার বুক করুন।">Offer ends tonight at 12 AM — reserve your chair before the timer runs out.</p>
+              <div class="mt-6 flex items-center gap-2 sm:gap-3" data-countdown aria-label="Offer countdown">
             <div class="cd-box"><span class="cd-v" data-cd="h">00</span><span class="cd-l" data-bn="ঘণ্টা">Hours</span></div>
             <span class="font-display text-xl font-bold text-gold-400" aria-hidden="true">:</span>
             <div class="cd-box"><span class="cd-v" data-cd="m">00</span><span class="cd-l" data-bn="মিনিট">Minutes</span></div>
@@ -1373,8 +1379,11 @@ ${pageHero({
             <a href="tel:${SITE.phone}" class="btn border-white/25 bg-transparent font-bold text-white hover:border-white hover:bg-white/10"><svg class="size-4.5"><use href="#i-phone"/></svg><span>${SITE.phoneDisplay}</span></a>
           </div>
         </div>
-        <div class="hidden lg:block">
-          <img src="assets/img/banner-gck-navy.webp" alt="Golden Chair King — অর্ডার করতে ইনবক্স করুন বা কল করুন" loading="lazy" class="mx-auto w-full max-w-[280px] rounded-3xl border border-gold-400/30 shadow-[0_0_0_1px_rgba(233,199,134,0.14),0_28px_60px_-20px_rgba(0,0,0,0.65)]">
+            <div class="relative mx-auto w-full max-w-[280px]">
+              <div class="pointer-events-none absolute -inset-6 rounded-[36px] bg-gold-500/10 blur-2xl" aria-hidden="true"></div>
+              <img src="assets/img/banner-gck-navy.webp" alt="Golden Chair King — অর্ডার করতে ইনবক্স করুন বা কল করুন" loading="lazy" class="relative w-full rounded-3xl border border-gold-400/30 shadow-[0_0_0_1px_rgba(233,199,134,0.14),0_28px_60px_-20px_rgba(0,0,0,0.65)]">
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1383,7 +1392,7 @@ ${pageHero({
       <div class="flex items-end justify-between gap-4">
         <div>
           <p class="eyebrow" data-bn="সব অফার">All Offers</p>
-          <h2 class="section-title mt-1.5" data-bn="অফারে থাকা চেয়ার">Chairs on Offer</h2>
+          <h2 class="section-title title-underline mt-1.5" data-bn="অফারে থাকা চেয়ার">Chairs on Offer</h2>
         </div>
       </div>
       <div class="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4" data-stagger>
