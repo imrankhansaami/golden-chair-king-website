@@ -652,13 +652,11 @@
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var slides = [];
     var dots = [];
-
     function isVisible(el) {
       return el.offsetParent !== null && window.getComputedStyle(el).display !== "none";
     }
     function sync() {
       slides = allSlides.filter(isVisible);
-      dots = allDots.filter(isVisible);
       if (!slides.length) return;
       if (idx >= slides.length) idx = 0;
       go(idx);
@@ -667,7 +665,9 @@
       if (!slides.length) return;
       idx = (i % slides.length + slides.length) % slides.length;
       track.style.transform = "translateX(-" + idx * 100 + "%)";
-      dots.forEach(function (d, k) { d.classList.toggle("active", k === idx); });
+      allDots.forEach(function (d) {
+        d.classList.toggle("active", parseInt(d.getAttribute("data-hero-dot") || "0", 10) === idx);
+      });
       slides.forEach(function (s, k) { s.setAttribute("aria-label", (k + 1) + " of " + slides.length); });
     }
     function start() {
@@ -684,7 +684,7 @@
     if (prev) prev.addEventListener("click", function () { manual(idx - 1); });
     if (next) next.addEventListener("click", function () { manual(idx + 1); });
     allDots.forEach(function (d) {
-      d.addEventListener("click", function () { manual(dots.indexOf(d)); });
+      d.addEventListener("click", function () { manual(parseInt(d.getAttribute("data-hero-dot") || "0", 10)); });
     });
     slider.addEventListener("mouseenter", stop);
     slider.addEventListener("mouseleave", start);
