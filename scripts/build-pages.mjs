@@ -490,18 +490,20 @@ ${overlays()}
 
       <div id="hero-track" class="flex transition-transform duration-700 ease-out">
         <!-- Slide 1 — designed for comfort (banner) -->
-        <div class="relative flex w-full shrink-0 items-center justify-center overflow-hidden bg-gradient-to-b from-[#d9ae80] via-[#f0d4aa] to-[#f5d8ad]" role="group" aria-roledescription="slide" aria-label="1 of 5">
-          <img src="assets/img/slides/slide-comfort.webp" alt="Designed for comfort, built for work — a Golden Chair King ergonomic mesh chair with free delivery" width="1600" height="678" fetchpriority="high" class="h-auto max-h-[720px] w-full object-contain">
-          <a href="shop.html" class="group btn btn-gold absolute right-5 bottom-5 z-10 font-extrabold sm:right-8 sm:bottom-7">
+        <div class="relative flex w-full shrink-0 items-center justify-center overflow-hidden" role="group" aria-roledescription="slide" aria-label="1 of 5">
+          <img src="assets/img/slides/slide-comfort.webp" alt="" aria-hidden="true" class="absolute inset-0 h-full w-full scale-110 object-cover blur-xl" >
+          <img src="assets/img/slides/slide-comfort.webp" alt="Designed for comfort, built for work — a Golden Chair King ergonomic mesh chair with free delivery" width="1600" height="678" fetchpriority="high" class="relative h-auto max-h-[720px] w-full object-contain">
+          <a href="shop.html" class="group btn btn-gold absolute right-5 bottom-16 z-10 font-extrabold sm:right-8 sm:bottom-7">
             <span data-bn="সব চেয়ার দেখুন">Shop All Chairs</span>
             <svg class="size-4.5 transition-transform duration-300 group-hover:translate-x-1"><use href="#i-arrow"/></svg>
           </a>
         </div>
 
         <!-- Slide 2 — comfort that works with you (banner) -->
-        <div class="relative flex w-full shrink-0 items-center justify-center overflow-hidden bg-gradient-to-b from-[#d9ae80] via-[#f0d4aa] to-[#f5d8ad]" role="group" aria-roledescription="slide" aria-label="2 of 5">
-          <img src="assets/img/slides/slide-collection.webp" alt="Comfort that works with you — explore the Golden Chair King office chair collection, free delivery available" width="1600" height="684" loading="lazy" class="h-auto max-h-[720px] w-full object-contain">
-          <a href="shop.html" class="group btn btn-gold absolute right-5 bottom-5 z-10 font-extrabold sm:right-8 sm:bottom-7">
+        <div class="relative flex w-full shrink-0 items-center justify-center overflow-hidden" role="group" aria-roledescription="slide" aria-label="2 of 5">
+          <img src="assets/img/slides/slide-collection.webp" alt="" aria-hidden="true" loading="lazy" class="absolute inset-0 h-full w-full scale-110 object-cover blur-xl">
+          <img src="assets/img/slides/slide-collection.webp" alt="Comfort that works with you — explore the Golden Chair King office chair collection, free delivery available" width="1600" height="684" loading="lazy" class="relative h-auto max-h-[720px] w-full object-contain">
+          <a href="shop.html" class="group btn btn-gold absolute right-5 bottom-16 z-10 font-extrabold sm:right-8 sm:bottom-7">
             <span data-bn="কালেকশন দেখুন">Browse the Collection</span>
             <svg class="size-4.5 transition-transform duration-300 group-hover:translate-x-1"><use href="#i-arrow"/></svg>
           </a>
