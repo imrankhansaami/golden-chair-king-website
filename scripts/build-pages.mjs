@@ -438,7 +438,7 @@ const homePage = () => `<!doctype html>
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&amp;family=Hind+Siliguri:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&amp;family=Montserrat:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 
   <!-- Styles & assets -->
   <link rel="stylesheet" href="assets/css/site.css?v=${ASSET_V}">
@@ -897,7 +897,7 @@ const shellTop = (active, meta) => `<!doctype html>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&amp;family=Hind+Siliguri:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&amp;family=Montserrat:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/site.css?v=${ASSET_V}">
 ${meta.jsonLd ? `  <script type="application/ld+json">\n${meta.jsonLd}\n  </script>\n` : ""}</head>

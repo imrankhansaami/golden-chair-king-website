@@ -52,8 +52,8 @@
 }
 
 @theme {
-  --font-sans: "Manrope", "Hind Siliguri", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Cinzel", "Hind Siliguri", ui-serif, Georgia, serif;
+  --font-sans: "Montserrat", "Montserrat Fallback", "Hind Siliguri", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Montserrat", "Montserrat Fallback", "Hind Siliguri", ui-sans-serif, system-ui, sans-serif;
 
   --color-navy-950: #03182d;
   --color-navy-900: #082440;
@@ -82,7 +82,7 @@
   }
   /* Bangla typography when the BN toggle is on */
   body.lang-bn {
-    font-family: "Hind Siliguri", "Manrope", ui-sans-serif, system-ui, sans-serif;
+    font-family: "Hind Siliguri", "Montserrat", "Montserrat Fallback", ui-sans-serif, system-ui, sans-serif;
   }
   ::selection {
     background: var(--color-gold-400);
