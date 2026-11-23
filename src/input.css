@@ -96,7 +96,7 @@
   }
 
   .eyebrow {
-    @apply text-[11px] font-extrabold uppercase tracking-[0.2em] text-gold-600;
+    @apply text-[11px] font-extrabold tracking-[0.24em] text-gold-600 uppercase;
   }
   .section-title {
     @apply font-display text-[22px] leading-tight font-semibold text-navy-900 sm:text-3xl lg:text-4xl;
@@ -128,7 +128,7 @@
   }
 
   .cd-box {
-    @apply flex min-w-[56px] flex-col items-center rounded-xl bg-white/10 px-3 py-2 backdrop-blur;
+    @apply flex min-w-[56px] flex-col items-center rounded-xl border border-gold-400/30 bg-white/[0.04] px-3 py-2 backdrop-blur;
   }
   .cd-v {
     @apply font-display text-xl font-bold text-gold-300 tabular-nums sm:text-2xl;
@@ -397,4 +397,49 @@
   .shine::after {
     display: none;
   }
+}
+
+/* ============================================================
+   Luxury layer: gold foil, hairline frames, quiet cards
+   ============================================================ */
+
+/* gold-foil button */
+.btn-gold {
+  background: linear-gradient(180deg, #f5e3b8 0%, #e9c786 48%, #d3ab63 100%);
+  color: #03182d;
+  border: 1px solid rgba(148, 113, 58, 0.55);
+  box-shadow: 0 12px 26px -12px rgba(185, 146, 75, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  transition: box-shadow 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+}
+.btn-gold:hover {
+  filter: brightness(1.06);
+  box-shadow: 0 16px 30px -12px rgba(185, 146, 75, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  transform: translateY(-1px);
+}
+
+/* gold hairline that sweeps across a card on hover */
+.card-hair::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #e9c786, transparent);
+  transform: scaleX(0);
+  transition: transform 0.45s ease;
+  z-index: 1;
+}
+.card-hair:hover::before {
+  transform: scaleX(1);
+}
+
+/* inner hairline double-frame (for the dark CTA band) */
+.frame-inner::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(233, 199, 134, 0.22);
+  border-radius: 1.1rem;
+  pointer-events: none;
 }

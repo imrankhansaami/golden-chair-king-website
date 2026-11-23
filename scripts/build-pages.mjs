@@ -15,6 +15,7 @@ const discount = (p) => Math.round((1 - p.price / p.oldPrice) * 100);
 const sprite = `
   <svg xmlns="http://www.w3.org/2000/svg" class="hidden" aria-hidden="true"><defs>
     <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2c.7 5.3 4.7 9.3 10 10-5.3.7-9.3 4.7-10 10-.7-5.3-4.7-9.3-10-10 5.3-.7 9.3-4.7 10-10Z"/></symbol>
     <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></symbol>
     <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></symbol>
     <symbol id="i-fb" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></symbol>
@@ -163,7 +164,7 @@ const overlays = () => `
   <div id="toasts" class="pointer-events-none fixed inset-x-0 bottom-[72px] z-[80] flex flex-col items-center gap-2 px-4 lg:bottom-8" aria-live="polite"></div>`;
 
 const footer = () => `
-  <footer class="bg-navy-950 pt-14 text-white/80">
+  <footer class="border-t border-gold-400/20 bg-navy-950 pt-14 text-white/80">
     <div class="container-x grid gap-10 pb-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.4fr]">
       <div>
         <img src="assets/img/logo-horizontal.png" alt="${SITE.name}" width="742" height="260" loading="lazy" class="h-11 w-auto">
@@ -277,8 +278,8 @@ const starsRow = (p) => `
 
 const productCard = (p, { deal = false } = {}) => {
   const wrap = deal
-    ? "group flex w-[70vw] max-w-[270px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-base-300/70 bg-base-100 shadow-sm transition-all duration-300 hover:shadow-xl"
-    : "group flex flex-col overflow-hidden rounded-2xl border border-base-300/70 bg-base-100 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl";
+    ? "card-hair group relative flex w-[70vw] max-w-[270px] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-base-300/70 bg-base-100 shadow-sm transition-all duration-300 hover:border-gold-400/50 hover:shadow-xl"
+    : "card-hair group relative flex flex-col overflow-hidden rounded-2xl border border-base-300/70 bg-base-100 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-400/50 hover:shadow-xl";
   return `          <article class="${wrap}"${deal ? "" : " data-reveal"}>
             <figure class="shine relative aspect-square overflow-hidden bg-white">
               <a href="product/${p.slug}.html" aria-label="${p.name}">
@@ -291,17 +292,17 @@ const productCard = (p, { deal = false } = {}) => {
             </figure>
             <div class="flex flex-1 flex-col p-3 sm:p-4">
               <p class="text-[10px] font-extrabold tracking-wider text-base-content/40 uppercase" data-bn="${p.catBn}">${p.catEn}</p>
-              <h3 class="mt-1 line-clamp-2 text-[13px] leading-snug font-bold text-navy-900 sm:text-sm">
+              <h3 class="mt-1 line-clamp-2 font-display text-[12px] leading-snug font-semibold tracking-[0.02em] text-navy-900 sm:text-[13px]">
                 <a href="product/${p.slug}.html" class="transition-colors hover:text-primary" data-bn="${p.nameBn}">${p.name}</a>
               </h3>
 ${starsRow(p)}
               <div class="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                <span class="text-[15px] font-extrabold text-primary sm:text-lg">${money(p.price)}</span>
+                <span class="font-display text-[15px] font-bold text-navy-900 sm:text-base">${money(p.price)}</span>
                 <span class="text-xs font-semibold text-base-content/35 line-through">${money(p.oldPrice)}</span>
               </div>
               <div class="mt-auto pt-3">
-                <button type="button" data-add data-id="${p.slug}" data-name="${p.name}" data-name-bn="${p.nameBn}" data-price="${p.price}" data-img="${p.photos[0]}" class="btn btn-primary btn-sm w-full font-bold">
-                  <svg class="size-4"><use href="#i-cart"/></svg><span data-bn="কার্টে যোগ করুন">Add to Cart</span>
+                <button type="button" data-add data-id="${p.slug}" data-name="${p.name}" data-name-bn="${p.nameBn}" data-price="${p.price}" data-img="${p.photos[0]}" class="btn btn-sm w-full border border-gold-400/40 bg-navy-950 font-bold text-gold-300 transition-colors hover:border-gold-400 hover:bg-navy-800 hover:text-gold-200">
+                  <svg class="size-4"><use href="#i-cart"/></svg><span class="text-[11px] font-extrabold tracking-wider" data-bn="কার্টে যোগ করুন">Add to Cart</span>
                 </button>
               </div>
             </div>
@@ -323,7 +324,7 @@ const marqueeSet = () =>
   marqueeItems
     .map(
       ([en, bn]) =>
-        `        <span class="flex shrink-0 items-center gap-10"><span class="text-[11px] font-bold tracking-[0.22em] text-gold-300 uppercase sm:text-xs" data-bn="${bn}">${en.replace("&", "&amp;")}</span><svg class="size-3 shrink-0 text-gold-500/50" aria-hidden="true"><use href="#i-star"/></svg></span>`
+        `        <span class="flex shrink-0 items-center gap-10"><span class="text-[11px] font-bold tracking-[0.22em] text-gold-300 uppercase sm:text-xs" data-bn="${bn}">${en.replace("&", "&amp;")}</span><svg class="size-3.5 shrink-0 text-gold-500/60" aria-hidden="true"><use href="#i-spark"/></svg></span>`
     )
     .join("\n");
 
@@ -445,7 +446,7 @@ ${homeJsonLd()}
 ${sprite}
 
   <!-- ======= Promo bar ======= -->
-  <div class="bg-navy-900 text-[11px] font-semibold text-white/80 sm:text-xs">
+  <div class="border-b border-gold-400/10 bg-navy-950 text-[11px] font-semibold text-white/80 sm:text-xs">
     <div class="container-x flex h-9 items-center justify-between gap-3 sm:h-10">
       <p class="flex min-w-0 items-center gap-2">
         <svg class="size-3.5 shrink-0 text-gold-400"><use href="#i-truck"/></svg>
@@ -473,12 +474,12 @@ ${overlays()}
   <main id="main">
 
     <!-- ======= Hero ======= -->
-    <section class="relative overflow-hidden bg-navy-950">
+    <section class="relative overflow-hidden bg-[#02101f]">
       <div class="pointer-events-none absolute -top-32 right-[-10%] size-[480px] rounded-full bg-gold-500/15 blur-[130px]" aria-hidden="true"></div>
       <div class="pointer-events-none absolute bottom-[-30%] left-[-10%] size-[420px] rounded-full bg-navy-700/50 blur-[120px]" aria-hidden="true"></div>
       <div class="pointer-events-none absolute inset-0 opacity-70 [background-image:radial-gradient(rgba(233,199,134,0.13)_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(70%_60%_at_55%_40%,black,transparent)]" aria-hidden="true"></div>
 
-      <div class="container-x relative grid items-center gap-12 py-12 sm:py-16 lg:grid-cols-2 lg:gap-10 lg:py-24">
+      <div class="container-x relative grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-2 lg:gap-10 lg:py-28">
         <div>
           <span class="hero-anim d1 inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/10 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-gold-300 sm:text-xs">
             <svg class="size-3.5 shrink-0"><use href="#i-pin"/></svg>
@@ -490,7 +491,7 @@ ${overlays()}
           </h1>
           <p class="hero-anim d3 mt-5 max-w-xl text-[15px] leading-relaxed text-white/75 sm:text-base" data-bn="বজ চেয়ার, এরগনমিক হাই-ব্যাক মেশ, স্টাফ ও ভিজিটর চেয়ার — ওয়ারেন্টিসহ সারা বাংলাদেশে আপনার দরজায় ডেলিভারি।">Boss chairs, ergonomic high-back mesh, staff &amp; visitor seating — warranty-backed and delivered to your door anywhere in Bangladesh.</p>
           <div class="hero-anim d4 mt-7 flex flex-wrap gap-3">
-            <a href="shop.html" class="group btn btn-secondary btn-lg font-extrabold">
+            <a href="shop.html" class="group btn btn-gold btn-lg font-extrabold">
               <span data-bn="সব চেয়ার দেখুন">Shop All Chairs</span>
               <svg class="size-5 transition-transform duration-300 group-hover:translate-x-1"><use href="#i-arrow"/></svg>
             </a>
@@ -523,7 +524,7 @@ ${overlays()}
     </section>
 
     <!-- ======= Marquee ======= -->
-    <div class="marquee overflow-hidden border-y border-gold-400/15 bg-navy-950 py-3.5" aria-hidden="true">
+    <div class="marquee overflow-hidden border-t border-gold-400/15 bg-navy-950 py-3.5" aria-hidden="true">
       <div class="marquee-track flex w-max items-center gap-10 whitespace-nowrap">
 ${marqueeSet()}
 ${marqueeSet()}
@@ -531,29 +532,29 @@ ${marqueeSet()}
     </div>
 
     <!-- ======= Stats ======= -->
-    <section class="border-b border-base-300/70 bg-base-100">
+    <section class="border-b border-gold-400/20 bg-navy-950">
       <div class="container-x grid grid-cols-2 gap-x-4 gap-y-8 py-10 lg:grid-cols-4" data-stagger>
         <div class="text-center" data-reveal>
-          <p class="font-display text-3xl font-bold text-navy-900 tabular-nums sm:text-4xl"><span data-count="12000">12,000</span><span class="text-gold-500">+</span></p>
-          <p class="mt-1.5 text-[11px] font-bold tracking-[0.14em] text-base-content/55 uppercase" data-bn="সন্তুষ্ট ক্রেতা">Happy Customers</p>
+          <p class="font-display text-3xl font-bold text-gold-300 tabular-nums sm:text-4xl"><span data-count="12000">12,000</span><span class="text-gold-500">+</span></p>
+          <p class="mt-1.5 text-[11px] font-bold tracking-[0.14em] text-white/45 uppercase" data-bn="সন্তুষ্ট ক্রেতা">Happy Customers</p>
         </div>
         <div class="text-center" data-reveal>
-          <p class="font-display text-3xl font-bold text-navy-900 tabular-nums sm:text-4xl"><span data-count="4.9" data-decimals="1">4.9</span><span class="ml-1 text-gold-500">★</span></p>
-          <p class="mt-1.5 text-[11px] font-bold tracking-[0.14em] text-base-content/55 uppercase" data-bn="গড় ক্রেতা রেটিং">Average Rating</p>
+          <p class="font-display text-3xl font-bold text-gold-300 tabular-nums sm:text-4xl"><span data-count="4.9" data-decimals="1">4.9</span><span class="ml-1 text-gold-500">★</span></p>
+          <p class="mt-1.5 text-[11px] font-bold tracking-[0.14em] text-white/45 uppercase" data-bn="গড় ক্রেতা রেটিং">Average Rating</p>
         </div>
         <div class="text-center" data-reveal>
-          <p class="font-display text-3xl font-bold text-navy-900 tabular-nums sm:text-4xl"><span data-count="64">64</span></p>
-          <p class="mt-1.5 text-[11px] font-bold tracking-[0.14em] text-base-content/55 uppercase" data-bn="জেলায় ডেলিভারি">Districts Delivered</p>
+          <p class="font-display text-3xl font-bold text-gold-300 tabular-nums sm:text-4xl"><span data-count="64">64</span></p>
+          <p class="mt-1.5 text-[11px] font-bold tracking-[0.14em] text-white/45 uppercase" data-bn="জেলায় ডেলিভারি">Districts Delivered</p>
         </div>
         <div class="text-center" data-reveal>
-          <p class="font-display text-3xl font-bold text-navy-900 tabular-nums sm:text-4xl"><span data-count="100">100</span><span class="text-gold-500">%</span></p>
-          <p class="mt-1.5 text-[11px] font-bold tracking-[0.14em] text-base-content/55 uppercase" data-bn="অথেনটিক চেয়ার">Genuine Chairs</p>
+          <p class="font-display text-3xl font-bold text-gold-300 tabular-nums sm:text-4xl"><span data-count="100">100</span><span class="text-gold-500">%</span></p>
+          <p class="mt-1.5 text-[11px] font-bold tracking-[0.14em] text-white/45 uppercase" data-bn="অথেনটিক চেয়ার">Genuine Chairs</p>
         </div>
       </div>
     </section>
 
     <!-- ======= Categories ======= -->
-    <section id="categories" class="bg-base-100 py-12 sm:py-16 lg:py-20">
+    <section id="categories" class="bg-base-100 py-14 sm:py-20 lg:py-24">
       <div class="container-x">
         <div class="flex items-end justify-between gap-4" data-reveal>
           <div>
@@ -566,7 +567,7 @@ ${marqueeSet()}
 ${categories
   .map(
     (c) => `          <a href="shop.html?cat=${c.slug}" data-reveal class="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-100 p-4 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-400 hover:shadow-lg sm:p-6">
-            <span class="flex size-13 items-center justify-center rounded-xl bg-navy-950 text-gold-400 transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-110 group-hover:bg-gold-400 group-hover:text-navy-950 sm:size-14"><svg class="size-7"><use href="#${c.icon}"/></svg></span>
+            <span class="flex size-14 items-center justify-center rounded-full border border-gold-400/40 bg-white text-gold-600 transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-navy-950 group-hover:text-gold-300 sm:size-16"><svg class="size-6.5"><use href="#${c.icon}"/></svg></span>
             <span>
               <span class="block text-[13px] font-bold text-navy-900 sm:text-sm" data-bn="${c.bn}">${c.en}</span>
               <span class="mt-0.5 block text-[11px] font-semibold text-base-content/45" data-bn="${c.countBn}">${c.count}</span>
@@ -580,7 +581,7 @@ ${categories
     </section>
 
     <!-- ======= Offer + countdown ======= -->
-    <section class="relative overflow-hidden bg-navy-950 py-12 sm:py-16 lg:py-20">
+    <section class="relative overflow-hidden bg-[#02101f] py-14 sm:py-20 lg:py-24">
       <img src="assets/img/scenes/home-office.webp" alt="" aria-hidden="true" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-[0.16]">
       <div class="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/85 to-navy-950/60" aria-hidden="true"></div>
       <div class="container-x relative grid items-center gap-10 lg:grid-cols-[1.2fr_.8fr]">
@@ -599,18 +600,18 @@ ${categories
             <div class="cd-box"><span class="cd-v" data-cd="s">00</span><span class="cd-l" data-bn="সেকেন্ড">Seconds</span></div>
           </div>
           <div class="mt-7 flex flex-wrap gap-3">
-            <a href="shop.html?deal=1" class="btn btn-secondary font-extrabold"><span data-bn="অফার দেখুন">View Offers</span><svg class="size-4.5"><use href="#i-arrow"/></svg></a>
+            <a href="shop.html?deal=1" class="btn btn-gold font-extrabold"><span data-bn="অফার দেখুন">View Offers</span><svg class="size-4.5"><use href="#i-arrow"/></svg></a>
             <a href="tel:${SITE.phone}" class="btn border-white/25 bg-transparent font-bold text-white hover:border-white hover:bg-white/10"><svg class="size-4.5"><use href="#i-phone"/></svg><span>${SITE.phoneDisplay}</span></a>
           </div>
         </div>
         <div class="hidden lg:block" data-reveal>
-          <img src="assets/img/banner-gck-navy.webp" alt="Golden Chair King — অর্ডার করতে ইনবক্স করুন বা কল করুন" loading="lazy" class="mx-auto w-full max-w-[300px] rounded-3xl border border-gold-400/30 shadow-2xl transition-transform duration-500 hover:rotate-1 hover:scale-[1.02]">
+          <img src="assets/img/banner-gck-navy.webp" alt="Golden Chair King — অর্ডার করতে ইনবক্স করুন বা কল করুন" loading="lazy" class="mx-auto w-full max-w-[300px] rounded-3xl border border-gold-400/30 shadow-[0_0_0_1px_rgba(233,199,134,0.14),0_28px_60px_-20px_rgba(0,0,0,0.65)] transition-transform duration-500 hover:rotate-1 hover:scale-[1.02]">
         </div>
       </div>
     </section>
 
     <!-- ======= Latest collection ======= -->
-    <section class="bg-base-100 py-12 sm:py-16 lg:py-20" id="latest">
+    <section class="bg-base-100 py-14 sm:py-20 lg:py-24" id="latest">
       <div class="container-x">
         <div class="flex items-end justify-between gap-4" data-reveal>
           <div>
@@ -631,7 +632,7 @@ ${latest.map((p) => productCard(p)).join("\n\n")}
     </section>
 
     <!-- ======= Hot deals (mobile swipe scroller) ======= -->
-    <section class="bg-base-200/50 py-12 sm:py-16">
+    <section class="bg-base-200/50 py-14 sm:py-20">
       <div class="container-x">
         <div class="flex items-end justify-between gap-4" data-reveal>
           <div>
@@ -648,7 +649,7 @@ ${deals.map((p) => productCard(p, { deal: true })).join("\n\n")}
     </section>
 
     <!-- ======= Why choose us ======= -->
-    <section class="bg-base-100 py-12 sm:py-16 lg:py-20">
+    <section class="bg-base-100 py-14 sm:py-20 lg:py-24">
       <div class="container-x">
         <div class="text-center" data-reveal>
           <p class="eyebrow" data-bn="কেন গোল্ডেন চেয়ার কিং">Why Golden Chair King</p>
@@ -656,22 +657,22 @@ ${deals.map((p) => productCard(p, { deal: true })).join("\n\n")}
         </div>
         <div class="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4" data-stagger>
           <div class="group rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-400/60 hover:shadow-lg sm:p-5" data-reveal>
-            <span class="flex size-11 items-center justify-center rounded-xl bg-gold-100 text-gold-700 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6"><svg class="size-5.5"><use href="#i-shield"/></svg></span>
+            <span class="flex size-11 items-center justify-center rounded-full border border-gold-400/40 bg-white text-gold-600 transition-all duration-300 group-hover:scale-110 group-hover:border-gold-500 group-hover:bg-navy-950 group-hover:text-gold-300"><svg class="size-5.5"><use href="#i-shield"/></svg></span>
             <h3 class="mt-3.5 text-[15px] font-bold text-navy-900" data-bn="অথেনটিক ওয়ারেন্টি">Genuine Warranty</h3>
             <p class="mt-1.5 text-[13px] leading-relaxed text-base-content/60" data-bn="নির্বাচিত পণ্যে ১ বছর পর্যন্ত রিপ্লেসমেন্ট ওয়ারেন্টি।">Up to 1-year replacement warranty on selected items.</p>
           </div>
           <div class="group rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-400/60 hover:shadow-lg sm:p-5" data-reveal>
-            <span class="flex size-11 items-center justify-center rounded-xl bg-gold-100 text-gold-700 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6"><svg class="size-5.5"><use href="#i-truck"/></svg></span>
+            <span class="flex size-11 items-center justify-center rounded-full border border-gold-400/40 bg-white text-gold-600 transition-all duration-300 group-hover:scale-110 group-hover:border-gold-500 group-hover:bg-navy-950 group-hover:text-gold-300"><svg class="size-5.5"><use href="#i-truck"/></svg></span>
             <h3 class="mt-3.5 text-[15px] font-bold text-navy-900" data-bn="সারা দেশে ডেলিভারি">Nationwide Delivery</h3>
             <p class="mt-1.5 text-[13px] leading-relaxed text-base-content/60" data-bn="৬৪ জেলায় দ্রুত ও যত্নসহ ডেলিভারি।">Fast &amp; careful delivery to all 64 districts.</p>
           </div>
           <div class="group rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-400/60 hover:shadow-lg sm:p-5" data-reveal>
-            <span class="flex size-11 items-center justify-center rounded-xl bg-gold-100 text-gold-700 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6"><svg class="size-5.5"><use href="#i-rotate"/></svg></span>
+            <span class="flex size-11 items-center justify-center rounded-full border border-gold-400/40 bg-white text-gold-600 transition-all duration-300 group-hover:scale-110 group-hover:border-gold-500 group-hover:bg-navy-950 group-hover:text-gold-300"><svg class="size-5.5"><use href="#i-rotate"/></svg></span>
             <h3 class="mt-3.5 text-[15px] font-bold text-navy-900" data-bn="৭ দিনের সহজ এক্সচেঞ্জ">7-Day Easy Exchange</h3>
             <p class="mt-1.5 text-[13px] leading-relaxed text-base-content/60" data-bn="পছন্দ হয়নি? ৭ দিনের মধ্যে ঝামেলাহীন এক্সচেঞ্জ।">Not satisfied? Exchange within 7 days, hassle-free.</p>
           </div>
           <div class="group rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-400/60 hover:shadow-lg sm:p-5" data-reveal>
-            <span class="flex size-11 items-center justify-center rounded-xl bg-gold-100 text-gold-700 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6"><svg class="size-5.5"><use href="#i-tag"/></svg></span>
+            <span class="flex size-11 items-center justify-center rounded-full border border-gold-400/40 bg-white text-gold-600 transition-all duration-300 group-hover:scale-110 group-hover:border-gold-500 group-hover:bg-navy-950 group-hover:text-gold-300"><svg class="size-5.5"><use href="#i-tag"/></svg></span>
             <h3 class="mt-3.5 text-[15px] font-bold text-navy-900" data-bn="সেরা দামের গ্যারান্টি">Best Price Guarantee</h3>
             <p class="mt-1.5 text-[13px] leading-relaxed text-base-content/60" data-bn="সরাসরি শোরুমের দাম — কোনো মধ্যস্বত্বভোগী নেই।">Direct showroom prices — no middlemen.</p>
           </div>
@@ -680,42 +681,42 @@ ${deals.map((p) => productCard(p, { deal: true })).join("\n\n")}
     </section>
 
     <!-- ======= Testimonials ======= -->
-    <section class="bg-navy-950 py-12 sm:py-16 lg:py-20">
+    <section class="bg-navy-950 py-14 sm:py-20 lg:py-24">
       <div class="container-x">
         <div class="text-center" data-reveal>
           <p class="eyebrow" data-bn="কাস্টমার রিভিউ">Customer Reviews</p>
           <h2 class="section-title title-underline title-underline-center mt-1.5 !text-white" data-bn="ক্রেতারা যা বলছেন">What Our Customers Say</h2>
         </div>
         <div class="mt-8 grid gap-4 sm:gap-5 md:grid-cols-3" data-stagger>
-          <figure class="quote-card relative rounded-2xl border border-white/10 bg-white/5 p-6 transition-colors duration-300 hover:border-gold-400/30" data-reveal>
+          <figure class="quote-card relative rounded-2xl border border-gold-400/15 bg-white/[0.04] p-6 transition-colors duration-300 hover:border-gold-400/30" data-reveal>
             <div class="flex gap-0.5 text-gold-400" aria-label="Rated 5 out of 5"><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg></div>
             <blockquote class="mt-4 text-sm leading-relaxed text-white/85">“Ordered 6 executive chairs for our office. Delivery was fast and the quality is honestly better than I expected at this price. Highly recommended!”</blockquote>
             <figcaption class="mt-5 flex items-center gap-3">
               <span class="flex size-10 items-center justify-center rounded-full bg-gold-400 font-display font-bold text-navy-950">R</span>
               <span>
-                <span class="block text-sm font-bold text-white">Rakib Hasan</span>
+                <span class="block font-display text-[13px] font-semibold tracking-[0.04em] text-white">Rakib Hasan</span>
                 <span class="block text-xs text-white/50" data-bn="উত্তরা, ঢাকা">Uttara, Dhaka</span>
               </span>
             </figcaption>
           </figure>
-          <figure class="quote-card relative rounded-2xl border border-white/10 bg-white/5 p-6 transition-colors duration-300 hover:border-gold-400/30" data-reveal>
+          <figure class="quote-card relative rounded-2xl border border-gold-400/15 bg-white/[0.04] p-6 transition-colors duration-300 hover:border-gold-400/30" data-reveal>
             <div class="flex gap-0.5 text-gold-400" aria-label="Rated 5 out of 5"><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg></div>
             <blockquote class="mt-4 text-sm leading-relaxed text-white/85">“The office chair arrived well-packed and exactly like the photos. Their WhatsApp support answered every question before I ordered.”</blockquote>
             <figcaption class="mt-5 flex items-center gap-3">
               <span class="flex size-10 items-center justify-center rounded-full bg-gold-400 font-display font-bold text-navy-950">N</span>
               <span>
-                <span class="block text-sm font-bold text-white">Nusrat Jahan</span>
+                <span class="block font-display text-[13px] font-semibold tracking-[0.04em] text-white">Nusrat Jahan</span>
                 <span class="block text-xs text-white/50" data-bn="চট্টগ্রাম">Chattogram</span>
               </span>
             </figcaption>
           </figure>
-          <figure class="quote-card relative rounded-2xl border border-white/10 bg-white/5 p-6 transition-colors duration-300 hover:border-gold-400/30" data-reveal>
+          <figure class="quote-card relative rounded-2xl border border-gold-400/15 bg-white/[0.04] p-6 transition-colors duration-300 hover:border-gold-400/30" data-reveal>
             <div class="flex gap-0.5 text-gold-400" aria-label="Rated 4.5 out of 5"><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4 opacity-30"><use href="#i-star"/></svg></div>
             <blockquote class="mt-4 text-sm leading-relaxed text-white/85">“Ordered two staff chairs and one boss chair for our office. Solid build, fair price, and the exchange policy gave me confidence.”</blockquote>
             <figcaption class="mt-5 flex items-center gap-3">
               <span class="flex size-10 items-center justify-center rounded-full bg-gold-400 font-display font-bold text-navy-950">M</span>
               <span>
-                <span class="block text-sm font-bold text-white">Mahmudul Islam</span>
+                <span class="block font-display text-[13px] font-semibold tracking-[0.04em] text-white">Mahmudul Islam</span>
                 <span class="block text-xs text-white/50" data-bn="মিরপুর, ঢাকা">Mirpur, Dhaka</span>
               </span>
             </figcaption>
@@ -725,7 +726,7 @@ ${deals.map((p) => productCard(p, { deal: true })).join("\n\n")}
     </section>
 
     <!-- ======= Showroom + map ======= -->
-    <section id="showroom" class="bg-base-100 py-12 sm:py-16 lg:py-20">
+    <section id="showroom" class="bg-base-100 py-14 sm:py-20 lg:py-24">
       <div class="container-x grid items-center gap-10 lg:grid-cols-2">
         <div class="reveal-left" data-reveal>
           <p class="eyebrow" data-bn="শোরুম">Visit Us</p>
@@ -768,7 +769,7 @@ ${deals.map((p) => productCard(p, { deal: true })).join("\n\n")}
     <!-- ======= WhatsApp CTA band ======= -->
     <section class="bg-base-100 pb-12 sm:pb-16 lg:pb-20">
       <div class="container-x">
-        <div class="relative overflow-hidden rounded-3xl bg-navy-900 px-6 py-9 sm:px-10 sm:py-12" data-reveal>
+        <div class="frame-inner relative overflow-hidden rounded-3xl bg-navy-950 px-6 py-9 sm:px-10 sm:py-12" data-reveal>
           <div class="pointer-events-none absolute -top-16 right-0 size-64 rounded-full bg-gold-500/20 blur-[90px]" aria-hidden="true"></div>
           <div class="relative grid gap-6 sm:grid-cols-[1fr_auto] sm:items-center">
             <div>
