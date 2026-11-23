@@ -1,0 +1,6 @@
+node_modules/
+assets/img/src/
+assets/img/logo-source.jpg
+.openchamber/
+.DS_Store
+Thumbs.db
