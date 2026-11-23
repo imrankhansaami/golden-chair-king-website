@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&amp;family=Montserrat:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/site.css?v=mwtj7b9l">
+  <link rel="stylesheet" href="assets/css/site.css?v=mwtjwryl">
 </head>
 
 <body class="has-bottom-nav bg-base-100 font-sans text-base-content antialiased">
@@ -204,6 +204,9 @@
 
   <div id="overlay" class="fixed inset-0 z-[60] hidden bg-navy-950/60 opacity-0 backdrop-blur-[2px] transition-opacity duration-300" aria-hidden="true"></div>
   <div id="toasts" class="pointer-events-none fixed inset-x-0 bottom-[72px] z-[80] flex flex-col items-center gap-2 px-4 lg:bottom-8" aria-live="polite"></div>
+  <button id="to-top-mobile" type="button" class="pointer-events-none fixed right-4 bottom-[84px] z-40 flex size-10 items-center justify-center rounded-full border border-white/10 bg-navy-900 text-gold-300 opacity-0 shadow-lg transition-opacity lg:hidden" aria-label="Back to top">
+    <svg class="size-4.5"><use href="#i-up"/></svg>
+  </button>
 
   <main id="main">
     <section class="relative overflow-hidden bg-[#02101f]">
@@ -614,8 +617,8 @@
 
 
   <footer class="border-t border-gold-400/20 bg-navy-950 pt-14 text-white/80">
-    <div class="container-x grid gap-10 pb-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.4fr]">
-      <div>
+    <div class="container-x grid grid-cols-2 gap-8 pb-12 sm:gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.4fr]">
+      <div class="col-span-2 lg:col-span-1">
         <img src="assets/img/logo-horizontal.png" alt="Golden Chair King" width="742" height="260" loading="lazy" class="h-11 w-auto">
         <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/60" data-bn="গোল্ডেন চেয়ার কিং ঢাকার বিশ্বস্ত চেয়ার শোরুম — এক্সিকিউটিভ ও বজ চেয়ার, উডেন বজ চেয়ার, এরগনমিক মেশ ও স্টাফ চেয়ার সাশ্রয়ী দামে, সারা দেশে ডেলিভারিসহ।">Golden Chair King is a trusted chair shop in Dhaka — executive &amp; boss chairs, wooden boss chairs, ergonomic mesh and staff chairs at honest prices, with nationwide delivery.</p>
         <div class="mt-5 flex gap-2.5">
@@ -645,7 +648,7 @@
           <li><a href="shop.html?cat=office-chairs" class="footer-link" data-bn="অফিস ও স্টাফ চেয়ার">Office & Staff Chairs</a></li>
         </ul>
       </div>
-      <div>
+      <div class="col-span-2 lg:col-span-1">
         <h3 class="text-[13px] font-extrabold tracking-[0.18em] text-gold-400 uppercase" data-bn="যোগাযোগ">Contact</h3>
         <ul class="mt-4 space-y-3.5 text-sm">
           <li class="flex items-start gap-2.5"><svg class="mt-0.5 size-4 shrink-0 text-gold-400"><use href="#i-pin"/></svg><span>South Jatrabari, Dhaka, Bangladesh</span></li>
@@ -726,6 +729,6 @@
     </div>
   </nav>
 
-  <script src="assets/js/site.js?v=mwtj7b9l" defer></script>
+  <script src="assets/js/site.js?v=mwtjwryl" defer></script>
 </body>
 </html>

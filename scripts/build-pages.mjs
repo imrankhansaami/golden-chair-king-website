@@ -166,12 +166,15 @@ const cartDrawer = () => `
 
 const overlays = () => `
   <div id="overlay" class="fixed inset-0 z-[60] hidden bg-navy-950/60 opacity-0 backdrop-blur-[2px] transition-opacity duration-300" aria-hidden="true"></div>
-  <div id="toasts" class="pointer-events-none fixed inset-x-0 bottom-[72px] z-[80] flex flex-col items-center gap-2 px-4 lg:bottom-8" aria-live="polite"></div>`;
+  <div id="toasts" class="pointer-events-none fixed inset-x-0 bottom-[72px] z-[80] flex flex-col items-center gap-2 px-4 lg:bottom-8" aria-live="polite"></div>
+  <button id="to-top-mobile" type="button" class="pointer-events-none fixed right-4 bottom-[84px] z-40 flex size-10 items-center justify-center rounded-full border border-white/10 bg-navy-900 text-gold-300 opacity-0 shadow-lg transition-opacity lg:hidden" aria-label="Back to top">
+    <svg class="size-4.5"><use href="#i-up"/></svg>
+  </button>`;
 
 const footer = () => `
   <footer class="border-t border-gold-400/20 bg-navy-950 pt-14 text-white/80">
-    <div class="container-x grid gap-10 pb-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.4fr]">
-      <div>
+    <div class="container-x grid grid-cols-2 gap-8 pb-12 sm:gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.4fr]">
+      <div class="col-span-2 lg:col-span-1">
         <img src="assets/img/logo-horizontal.png" alt="${SITE.name}" width="742" height="260" loading="lazy" class="h-11 w-auto">
         <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/60" data-bn="গোল্ডেন চেয়ার কিং ঢাকার বিশ্বস্ত চেয়ার শোরুম — এক্সিকিউটিভ ও বজ চেয়ার, উডেন বজ চেয়ার, এরগনমিক মেশ ও স্টাফ চেয়ার সাশ্রয়ী দামে, সারা দেশে ডেলিভারিসহ।">${SITE.name} is a trusted chair shop in Dhaka — executive &amp; boss chairs, wooden boss chairs, ergonomic mesh and staff chairs at honest prices, with nationwide delivery.</p>
         <div class="mt-5 flex gap-2.5">
@@ -198,7 +201,7 @@ const footer = () => `
 ${categories.map((c) => `          <li><a href="shop.html?cat=${c.slug}" class="footer-link" data-bn="${c.bn}">${c.en}</a></li>`).join("\n")}
         </ul>
       </div>
-      <div>
+      <div class="col-span-2 lg:col-span-1">
         <h3 class="text-[13px] font-extrabold tracking-[0.18em] text-gold-400 uppercase" data-bn="যোগাযোগ">Contact</h3>
         <ul class="mt-4 space-y-3.5 text-sm">
           <li class="flex items-start gap-2.5"><svg class="mt-0.5 size-4 shrink-0 text-gold-400"><use href="#i-pin"/></svg><span>${SITE.address}, Bangladesh</span></li>
@@ -583,7 +586,7 @@ ${marqueeSet()}
 
     <!-- ======= Stats ======= -->
     <section class="border-b border-gold-400/20 bg-navy-950">
-      <div class="container-x grid grid-cols-2 gap-x-4 gap-y-8 py-10 lg:grid-cols-4" data-stagger>
+      <div class="container-x grid grid-cols-2 gap-x-4 gap-y-8 py-8 sm:py-10 lg:grid-cols-4" data-stagger>
         <div class="text-center" data-reveal>
           <p class="font-display text-3xl font-bold text-gold-300 tabular-nums sm:text-4xl"><span data-count="12000">12,000</span><span class="text-gold-500">+</span></p>
           <p class="mt-1.5 text-[11px] font-bold tracking-[0.14em] text-white/45 uppercase" data-bn="সন্তুষ্ট ক্রেতা">Happy Customers</p>
@@ -604,7 +607,7 @@ ${marqueeSet()}
     </section>
 
     <!-- ======= Categories ======= -->
-    <section id="categories" class="bg-base-100 py-14 sm:py-20 lg:py-24">
+    <section id="categories" class="bg-base-100 py-10 sm:py-20 lg:py-24">
       <div class="container-x">
         <div class="flex items-end justify-between gap-4" data-reveal>
           <div>
@@ -631,7 +634,7 @@ ${categories
     </section>
 
     <!-- ======= Offer + countdown ======= -->
-    <section class="relative overflow-hidden bg-[#02101f] py-14 sm:py-20 lg:py-24">
+    <section class="relative overflow-hidden bg-[#02101f] py-10 sm:py-20 lg:py-24">
       <img src="assets/img/scenes/home-office.webp" alt="" aria-hidden="true" loading="lazy" class="absolute inset-0 h-full w-full object-cover opacity-[0.16]">
       <div class="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/85 to-navy-950/60" aria-hidden="true"></div>
       <div class="container-x relative grid items-center gap-10 lg:grid-cols-[1.2fr_.8fr]">
@@ -661,7 +664,7 @@ ${categories
     </section>
 
     <!-- ======= Latest collection ======= -->
-    <section class="bg-base-100 py-14 sm:py-20 lg:py-24" id="latest">
+    <section class="bg-base-100 py-10 sm:py-20 lg:py-24" id="latest">
       <div class="container-x">
         <div class="flex items-end justify-between gap-4" data-reveal>
           <div>
@@ -682,7 +685,7 @@ ${latest.map((p) => productCard(p)).join("\n\n")}
     </section>
 
     <!-- ======= Hot deals (mobile swipe scroller) ======= -->
-    <section class="bg-base-200/50 py-14 sm:py-20">
+    <section class="bg-base-200/50 py-10 sm:py-20">
       <div class="container-x">
         <div class="flex items-end justify-between gap-4" data-reveal>
           <div>
@@ -699,7 +702,7 @@ ${deals.map((p) => productCard(p, { deal: true })).join("\n\n")}
     </section>
 
     <!-- ======= Why choose us ======= -->
-    <section class="bg-base-100 py-14 sm:py-20 lg:py-24">
+    <section class="bg-base-100 py-10 sm:py-20 lg:py-24">
       <div class="container-x">
         <div class="text-center" data-reveal>
           <p class="eyebrow" data-bn="কেন গোল্ডেন চেয়ার কিং">Why Golden Chair King</p>
@@ -731,14 +734,14 @@ ${deals.map((p) => productCard(p, { deal: true })).join("\n\n")}
     </section>
 
     <!-- ======= Testimonials ======= -->
-    <section class="bg-navy-950 py-14 sm:py-20 lg:py-24">
+    <section class="bg-navy-950 py-10 sm:py-20 lg:py-24">
       <div class="container-x">
         <div class="text-center" data-reveal>
           <p class="eyebrow" data-bn="কাস্টমার রিভিউ">Customer Reviews</p>
           <h2 class="section-title title-underline title-underline-center mt-1.5 !text-white" data-bn="ক্রেতারা যা বলছেন">What Our Customers Say</h2>
         </div>
-        <div class="mt-8 grid gap-4 sm:gap-5 md:grid-cols-3" data-stagger>
-          <figure class="quote-card relative rounded-2xl border border-gold-400/15 bg-white/[0.04] p-6 transition-colors duration-300 hover:border-gold-400/30" data-reveal>
+        <div class="no-scrollbar -mx-4 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:pb-0" data-stagger>
+          <figure class="quote-card relative w-[82vw] shrink-0 snap-start rounded-2xl border border-gold-400/15 bg-white/[0.04] p-6 transition-colors duration-300 hover:border-gold-400/30 md:w-auto" data-reveal>
             <div class="flex gap-0.5 text-gold-400" aria-label="Rated 5 out of 5"><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg></div>
             <blockquote class="mt-4 text-sm leading-relaxed text-white/85">“Ordered 6 executive chairs for our office. Delivery was fast and the quality is honestly better than I expected at this price. Highly recommended!”</blockquote>
             <figcaption class="mt-5 flex items-center gap-3">
@@ -749,7 +752,7 @@ ${deals.map((p) => productCard(p, { deal: true })).join("\n\n")}
               </span>
             </figcaption>
           </figure>
-          <figure class="quote-card relative rounded-2xl border border-gold-400/15 bg-white/[0.04] p-6 transition-colors duration-300 hover:border-gold-400/30" data-reveal>
+          <figure class="quote-card relative w-[82vw] shrink-0 snap-start rounded-2xl border border-gold-400/15 bg-white/[0.04] p-6 transition-colors duration-300 hover:border-gold-400/30 md:w-auto" data-reveal>
             <div class="flex gap-0.5 text-gold-400" aria-label="Rated 5 out of 5"><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg></div>
             <blockquote class="mt-4 text-sm leading-relaxed text-white/85">“The office chair arrived well-packed and exactly like the photos. Their WhatsApp support answered every question before I ordered.”</blockquote>
             <figcaption class="mt-5 flex items-center gap-3">
@@ -760,7 +763,7 @@ ${deals.map((p) => productCard(p, { deal: true })).join("\n\n")}
               </span>
             </figcaption>
           </figure>
-          <figure class="quote-card relative rounded-2xl border border-gold-400/15 bg-white/[0.04] p-6 transition-colors duration-300 hover:border-gold-400/30" data-reveal>
+          <figure class="quote-card relative w-[82vw] shrink-0 snap-start rounded-2xl border border-gold-400/15 bg-white/[0.04] p-6 transition-colors duration-300 hover:border-gold-400/30 md:w-auto" data-reveal>
             <div class="flex gap-0.5 text-gold-400" aria-label="Rated 4.5 out of 5"><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4"><use href="#i-star"/></svg><svg class="size-4 opacity-30"><use href="#i-star"/></svg></div>
             <blockquote class="mt-4 text-sm leading-relaxed text-white/85">“Ordered two staff chairs and one boss chair for our office. Solid build, fair price, and the exchange policy gave me confidence.”</blockquote>
             <figcaption class="mt-5 flex items-center gap-3">
@@ -776,7 +779,7 @@ ${deals.map((p) => productCard(p, { deal: true })).join("\n\n")}
     </section>
 
     <!-- ======= Showroom + map ======= -->
-    <section id="showroom" class="bg-base-100 py-14 sm:py-20 lg:py-24">
+    <section id="showroom" class="bg-base-100 py-10 sm:py-20 lg:py-24">
       <div class="container-x grid items-center gap-10 lg:grid-cols-2">
         <div class="reveal-left" data-reveal>
           <p class="eyebrow" data-bn="শোরুম">Visit Us</p>

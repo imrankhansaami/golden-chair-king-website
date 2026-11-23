@@ -99,7 +99,7 @@
     @apply text-[11px] font-extrabold tracking-[0.24em] text-gold-600 uppercase;
   }
   .section-title {
-    @apply font-display text-[22px] leading-tight font-semibold text-navy-900 sm:text-3xl lg:text-4xl;
+    @apply font-display text-[24px] leading-tight font-semibold text-navy-900 sm:text-3xl lg:text-4xl;
   }
   .link-more {
     @apply inline-flex items-center gap-1.5 text-sm font-extrabold text-primary transition-colors hover:text-gold-600;
@@ -160,7 +160,12 @@
   }
 
   .hero-dot {
-    @apply h-1.5 w-6 rounded-full bg-white/25 transition-all duration-300 hover:bg-white/50;
+    @apply relative h-1.5 w-6 rounded-full bg-white/25 transition-all duration-300 hover:bg-white/50;
+  }
+  .hero-dot::after {
+    content: "";
+    position: absolute;
+    inset: -10px -6px;
   }
   .hero-dot.active {
     @apply w-10 bg-gold-400;

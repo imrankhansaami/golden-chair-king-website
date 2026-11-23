@@ -377,23 +377,23 @@
 
   /* ================= Scroll UI (header shadow, back to top) ================= */
   function initScrollUI() {
-    var toTop = $("#to-top");
+    var toTops = [$("#to-top"), $("#to-top-mobile")].filter(Boolean);
     var header = $("#site-header");
     function onScroll() {
       var y = window.scrollY || window.pageYOffset || 0;
-      if (toTop) {
-        toTop.classList.toggle("opacity-0", y < 480);
-        toTop.classList.toggle("pointer-events-none", y < 480);
-      }
+      toTops.forEach(function (el) {
+        el.classList.toggle("opacity-0", y < 480);
+        el.classList.toggle("pointer-events-none", y < 480);
+      });
       if (header) header.classList.toggle("is-scrolled", y > 8);
     }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    if (toTop) {
-      toTop.addEventListener("click", function () {
+    toTops.forEach(function (el) {
+      el.addEventListener("click", function () {
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
-    }
+    });
   }
 
   /* ================= Product gallery ================= */
