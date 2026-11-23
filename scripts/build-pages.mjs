@@ -442,7 +442,7 @@ const homePage = () => `<!doctype html>
 
   <!-- Styles & assets -->
   <link rel="stylesheet" href="assets/css/site.css?v=${ASSET_V}">
-  <link rel="preload" as="image" href="assets/img/banner-gck-crown.webp">
+  <link rel="preload" as="image" href="assets/img/slides/slide-comfort.webp">
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -489,9 +489,27 @@ ${overlays()}
     <section id="hero-slider" class="relative overflow-hidden bg-[#02101f]" aria-roledescription="carousel" aria-label="Featured collections">
 
       <div id="hero-track" class="flex transition-transform duration-700 ease-out">
-        <!-- Slide 1 — brand -->
-        <div class="relative w-full shrink-0 overflow-hidden" role="group" aria-roledescription="slide" aria-label="1 of 3">
-          <img src="assets/img/banner-gck-crown.webp" alt="Golden Chair King — brown leather executive chair with the gold crown emblem" width="1400" height="933" fetchpriority="high" class="absolute inset-0 h-full w-full object-cover object-center">
+        <!-- Slide 1 — designed for comfort (banner) -->
+        <div class="relative flex w-full shrink-0 items-center justify-center overflow-hidden bg-gradient-to-b from-[#d9ae80] via-[#f0d4aa] to-[#f5d8ad]" role="group" aria-roledescription="slide" aria-label="1 of 5">
+          <img src="assets/img/slides/slide-comfort.webp" alt="Designed for comfort, built for work — a Golden Chair King ergonomic mesh chair with free delivery" width="1600" height="678" fetchpriority="high" class="h-auto max-h-[720px] w-full object-contain">
+          <a href="shop.html" class="group btn btn-gold absolute right-5 bottom-5 z-10 font-extrabold sm:right-8 sm:bottom-7">
+            <span data-bn="সব চেয়ার দেখুন">Shop All Chairs</span>
+            <svg class="size-4.5 transition-transform duration-300 group-hover:translate-x-1"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+
+        <!-- Slide 2 — comfort that works with you (banner) -->
+        <div class="relative flex w-full shrink-0 items-center justify-center overflow-hidden bg-gradient-to-b from-[#d9ae80] via-[#f0d4aa] to-[#f5d8ad]" role="group" aria-roledescription="slide" aria-label="2 of 5">
+          <img src="assets/img/slides/slide-collection.webp" alt="Comfort that works with you — explore the Golden Chair King office chair collection, free delivery available" width="1600" height="684" loading="lazy" class="h-auto max-h-[720px] w-full object-contain">
+          <a href="shop.html" class="group btn btn-gold absolute right-5 bottom-5 z-10 font-extrabold sm:right-8 sm:bottom-7">
+            <span data-bn="কালেকশন দেখুন">Browse the Collection</span>
+            <svg class="size-4.5 transition-transform duration-300 group-hover:translate-x-1"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+
+        <!-- Slide 3 — brand -->
+        <div class="relative w-full shrink-0 overflow-hidden" role="group" aria-roledescription="slide" aria-label="3 of 5">
+          <img src="assets/img/banner-gck-crown.webp" alt="Golden Chair King — brown leather executive chair with the gold crown emblem" width="1400" height="933" loading="lazy" class="absolute inset-0 h-full w-full object-cover object-center">
           <div class="absolute inset-0 bg-gradient-to-r from-[#02101f] via-[#02101f]/85 to-[#02101f]/35" aria-hidden="true"></div>
           <div class="container-x relative flex min-h-[540px] flex-col justify-center py-14 sm:min-h-[600px] sm:py-16 lg:py-20">
             <span class="hero-anim d1 inline-flex w-fit items-center gap-2 rounded-full border border-gold-400/40 bg-gold-400/10 px-3.5 py-1.5 text-[11px] font-bold tracking-wide text-gold-300 sm:text-xs">
@@ -522,8 +540,8 @@ ${overlays()}
           </div>
         </div>
 
-        <!-- Slide 2 — showroom -->
-        <div class="relative w-full shrink-0 overflow-hidden" role="group" aria-roledescription="slide" aria-label="2 of 3">
+        <!-- Slide 4 — showroom -->
+        <div class="relative w-full shrink-0 overflow-hidden" role="group" aria-roledescription="slide" aria-label="4 of 5">
           <img src="assets/img/hero-showroom.webp" alt="Golden Chair King showroom in Dhaka — executive desk with a navy and gold interior" width="1600" height="1200" loading="lazy" class="absolute inset-0 h-full w-full object-cover object-center">
           <div class="absolute inset-0 bg-gradient-to-r from-[#02101f] via-[#02101f]/85 to-[#02101f]/35" aria-hidden="true"></div>
           <div class="container-x relative flex min-h-[540px] flex-col justify-center py-14 sm:min-h-[600px] sm:py-16 lg:py-20">
@@ -545,8 +563,8 @@ ${overlays()}
           </div>
         </div>
 
-        <!-- Slide 3 — delivery -->
-        <div class="relative w-full shrink-0 overflow-hidden" role="group" aria-roledescription="slide" aria-label="3 of 3">
+        <!-- Slide 5 — delivery -->
+        <div class="relative w-full shrink-0 overflow-hidden" role="group" aria-roledescription="slide" aria-label="5 of 5">
           <img src="assets/img/scenes/home-office.webp" alt="A Golden Chair King mesh chair at a modern desk — nationwide delivery" width="1536" height="1024" loading="lazy" class="absolute inset-0 h-full w-full object-cover object-center">
           <div class="absolute inset-0 bg-gradient-to-r from-[#02101f] via-[#02101f]/85 to-[#02101f]/35" aria-hidden="true"></div>
           <div class="container-x relative flex min-h-[540px] flex-col justify-center py-14 sm:min-h-[600px] sm:py-16 lg:py-20">
@@ -577,10 +595,12 @@ ${overlays()}
       <button type="button" data-hero-next class="btn btn-circle absolute top-1/2 right-3 z-10 hidden -translate-y-1/2 border border-white/15 bg-[#02101f]/50 text-gold-300 backdrop-blur transition-colors hover:border-gold-400 hover:text-gold-200 sm:inline-flex lg:right-6" aria-label="Next slide">
         <svg class="size-5"><use href="#i-arrow"/></svg>
       </button>
-      <div class="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2">
+      <div class="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full bg-[#02101f]/40 px-3.5 py-2 backdrop-blur">
         <button type="button" data-hero-dot class="hero-dot active" aria-label="Go to slide 1"></button>
         <button type="button" data-hero-dot class="hero-dot" aria-label="Go to slide 2"></button>
         <button type="button" data-hero-dot class="hero-dot" aria-label="Go to slide 3"></button>
+        <button type="button" data-hero-dot class="hero-dot" aria-label="Go to slide 4"></button>
+        <button type="button" data-hero-dot class="hero-dot" aria-label="Go to slide 5"></button>
       </div>
     </section>
 
