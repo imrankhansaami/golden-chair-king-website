@@ -61,7 +61,7 @@ const header = (active = "home") => `
       </button>
 
       <a href="index.html" class="flex shrink-0 items-center" aria-label="${SITE.name} — Home">
-        <img src="assets/img/logo-horizontal.png" alt="${SITE.name}" width="742" height="260" fetchpriority="high" class="h-9 w-auto rounded-xl ring-1 ring-black/5 transition-transform duration-300 hover:scale-[1.03] sm:h-10 lg:h-11">
+        <img src="assets/img/logo-horizontal.png" alt="${SITE.name}" width="1276" height="300" fetchpriority="high" class="h-9 w-auto transition-transform duration-300 hover:scale-[1.03] sm:h-10 lg:h-11">
       </a>
 
       <nav class="ml-5 hidden items-center gap-0.5 lg:flex" aria-label="Main navigation">
@@ -98,7 +98,7 @@ ${categories.map((c) => `            <li><a href="shop.html?cat=${c.slug}" class
 const mobileMenu = () => `
   <aside id="mobile-menu" class="site-drawer fixed inset-y-0 left-0 z-[70] flex w-[86vw] max-w-sm -translate-x-full flex-col bg-navy-950 text-white shadow-2xl transition-transform duration-300" aria-hidden="true" aria-label="Mobile menu">
     <div class="flex items-center justify-between border-b border-white/10 px-4 py-3">
-      <img src="assets/img/logo-horizontal.png" alt="${SITE.name}" width="742" height="260" class="h-9 w-auto">
+      <img src="assets/img/logo-horizontal-gold.png" alt="${SITE.name}" width="1276" height="300" class="h-9 w-auto">
       <button type="button" data-close class="btn btn-circle btn-ghost btn-sm text-white/70 hover:text-white" aria-label="Close menu">
         <svg class="size-5"><use href="#i-x"/></svg>
       </button>
@@ -175,7 +175,7 @@ const footer = () => `
   <footer class="border-t border-gold-400/20 bg-navy-950 pt-14 text-white/80">
     <div class="container-x grid grid-cols-2 gap-8 pb-12 sm:gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.4fr]">
       <div class="col-span-2 lg:col-span-1">
-        <img src="assets/img/logo-horizontal.png" alt="${SITE.name}" width="742" height="260" loading="lazy" class="h-11 w-auto">
+        <img src="assets/img/logo-horizontal-gold.png" alt="${SITE.name}" width="1276" height="300" loading="lazy" class="h-11 w-auto">
         <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/60" data-bn="গোল্ডেন চেয়ার কিং ঢাকার বিশ্বস্ত চেয়ার শোরুম — এক্সিকিউটিভ ও বজ চেয়ার, উডেন বজ চেয়ার, এরগনমিক মেশ ও স্টাফ চেয়ার সাশ্রয়ী দামে, সারা দেশে ডেলিভারিসহ।">${SITE.name} is a trusted chair shop in Dhaka — executive &amp; boss chairs, wooden boss chairs, ergonomic mesh and staff chairs at honest prices, with nationwide delivery.</p>
         <div class="mt-5 flex gap-2.5">
           <a href="${SITE.facebook}" target="_blank" rel="noopener" class="flex size-9 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-gold-400 hover:bg-gold-400 hover:text-navy-950" aria-label="${SITE.name} on Facebook"><svg class="size-4.5"><use href="#i-fb"/></svg></a>
